@@ -1,0 +1,16 @@
+Sprites:
+Mario
+Question Mark Box
+Breakable Brick
+Brick
+Goomba
+Koopa
+Super Mushroom
+End Flag
+
+
+Grid Pieces:
+Path (Up/Down, Right/Left, Drop)
+Clause
+Variable
+Overlap (Up, Down)
