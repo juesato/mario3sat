@@ -7,70 +7,77 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class GameFrame extends JFrame {
-	GamePane gp;
-	ArrayList<Sprite> sprites;
-	ArrayList<Sprite> movingSprites;
-	Sprite mario;
-	int winWidth, winHeight;
-	int winX, winY;
-	int stageX,stageY;
-	
-	public GameFrame(){
-		super("3-Sat as Mario");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		gp = new GamePane();
-		setContentPane(gp);
-		winWidth = 32*22;
-		winHeight = 32*22;
-		setSize(winWidth, winHeight);
-		
-		stageX = 32*40;
-		stageY = 32*40;
-		
-		winX = 0;
-		winY = 0;
-		
-		sprites = new ArrayList<Sprite>();
-		movingSprites = new ArrayList<Sprite>();
-		for(int i = 0; i < 40; i++){
-			for(int j = 0; j < 40; j++){
-				if(i==0||i==39||j==0||j==39)
-					sprites.add(new Sprite(i*32.0/stageX, j*32.0/stageY, stageX, stageY, Sprite.BLOCK));
-			}
-		}
-		
-		sprites.add(new Sprite(2*32.0/stageX, 36*32.0/stageY, stageX, stageY, Sprite.QUESTION_BLOCK));
-		
-		mario = new Sprite(100.0/stageX, 100.0/stageY, stageX, stageY, Sprite.MARIO);
-		sprites.add(mario);
-		movingSprites.add(mario);
-		
-		GameThread gt = new GameThread(sprites, movingSprites);
-		gt.start();
-		
-		setVisible(true);
-		gp.requestFocusInWindow();
-	}
-	
-	public class GamePane extends JPanel implements KeyListener{
-		public GamePane(){
-			addKeyListener(this);
-		}
-		
-		public void paintComponent(Graphics g){
-//			try {
-//				BufferedImage img = ImageIO.read(new File("brick.png"));
-//				g.drawImage(img, 64,64,Color.white, null);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-			g.fillRect(0, 0, winWidth, winHeight);
-			for(Sprite s : sprites){
-//				System.out.println("Drawing " + s);
-				s.draw(g, winX, winY, winWidth, winHeight);
-			}
-		}
+  GamePane gp;
+  ArrayList<Sprite> sprites;
+  ArrayList<Sprite> movingSprites;
+  Sprite mario;
+  int winWidth, winHeight;
+  int winX, winY;
+  int stageX, stageY;
+
+  public GameFrame() {
+    super("3-Sat as Mario");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    gp = new GamePane();
+    setContentPane(gp);
+    winWidth = 32 * 22;
+    winHeight = 32 * 22;
+    setSize(winWidth, winHeight);
+
+    stageX = 32 * 40;
+    stageY = 32 * 40;
+
+    winX = 0;
+    winY = 0;
+
+    sprites = new ArrayList<Sprite>();
+    movingSprites = new ArrayList<Sprite>();
+    for (int i = 0; i < 40; i++) {
+      for (int j = 0; j < 40; j++) {
+        if (i == 0 || i == 39 || j == 0 || j == 39)
+          sprites
+              .add(new Sprite(i * 32.0 / stageX, j * 32.0 / stageY, stageX, stageY, Sprite.BLOCK));
+      }
+    }
+    
+//    Gadget gadget = new Gadget("CROSSOVER_DR", false);
+//    sprites = gadget.getSprites();
+
+    sprites.add(new Sprite(2 * 32.0 / stageX, 36 * 32.0 / stageY, stageX, stageY,
+        Sprite.QUESTION_BLOCK));
+
+    mario = new Sprite(100.0 / stageX, 100.0 / stageY, stageX, stageY, Sprite.MARIO);
+    sprites.add(mario);
+    movingSprites.add(mario);
+
+    GameThread gt = new GameThread(sprites, movingSprites);
+    gt.start();
+
+    setVisible(true);
+    gp.requestFocusInWindow();
+  }
+
+  public class GamePane extends JPanel implements KeyListener {
+    public GamePane() {
+      addKeyListener(this);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+      // try {
+      // BufferedImage img = ImageIO.read(new File("brick.png"));
+      // g.drawImage(img, 64,64,Color.white, null);
+      // } catch (IOException e) {
+      // e.printStackTrace();
+      // }
+      g.fillRect(0, 0, winWidth, winHeight);
+      for (Sprite s : sprites) {
+        // System.out.println("Drawing " + s);
+        s.draw(g, winX, winY, winWidth, winHeight);
+      }
+    }
+
 
     public void keyTyped(KeyEvent e) {}
 
@@ -123,9 +130,9 @@ public class GameFrame extends JFrame {
       while (!done) {
         long timestamp = System.currentTimeMillis();
         // Begin step computations
-        for (Sprite sprite : (ArrayList<Sprite>)movingSprites.clone()) {
+        for (Sprite sprite : (ArrayList<Sprite>) movingSprites.clone()) {
           sprite.x += sprite.hspeed / freq;
-          for (Sprite sprite2 : (ArrayList<Sprite>)sprites.clone()) {
+          for (Sprite sprite2 : (ArrayList<Sprite>) sprites.clone()) {
             if (sprite2 == sprite) continue;
             if (sprite.checkHorCollide(sprite2) && sprite.checkVertCollide(sprite2)) {
               System.out.println("hor collision between " + sprite + " and " + sprite2);
@@ -148,8 +155,8 @@ public class GameFrame extends JFrame {
 
                 if (sprite2.id == Sprite.KOOPA) {
 
-                  sprite2.id=Sprite.KOOPA_SHELL;
-                  sprite2.hspeed=Sprite.SHELL_SPEED;
+                  sprite2.id = Sprite.KOOPA_SHELL;
+                  sprite2.hspeed = Sprite.SHELL_SPEED;
                   movingSprites.add(sprite2);
                 }
 
@@ -158,7 +165,7 @@ public class GameFrame extends JFrame {
 
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
-                  sprite.id=Sprite.SUPER_MARIO;
+                  sprite.id = Sprite.SUPER_MARIO;
                   sprites.remove(sprite2);
                   sprite.update();
                 }
@@ -169,12 +176,12 @@ public class GameFrame extends JFrame {
                 else
                   sprite.setX(sprite2.getPixelX() + sprite2.width);
                 if (sprite2.id == Sprite.KOOPA) {
-                	sprite2.id=Sprite.KOOPA_SHELL;
-                    sprite2.hspeed=Sprite.SHELL_SPEED;
-                    movingSprites.add(sprite2);
+                  sprite2.id = Sprite.KOOPA_SHELL;
+                  sprite2.hspeed = Sprite.SHELL_SPEED;
+                  movingSprites.add(sprite2);
                 }
                 if (sprite2.id == Sprite.GOOMBA) {
-                  sprite.id=Sprite.MARIO;
+                  sprite.id = Sprite.MARIO;
                   sprite.update();
 
                 }
@@ -185,7 +192,7 @@ public class GameFrame extends JFrame {
           sprite.vspeed += Sprite.gravity / stageY / freq;
           sprite.y += sprite.vspeed / freq;
 
-          for (Sprite sprite2 : (ArrayList<Sprite>)sprites.clone()) {
+          for (Sprite sprite2 : (ArrayList<Sprite>) sprites.clone()) {
             if (sprite2 == sprite) continue;
             if (sprite.checkVertCollide(sprite2) && sprite.checkHorCollide(sprite2)) {
               // System.out.println("vert collision between " + sprite + " and " + sprite2);
@@ -207,16 +214,16 @@ public class GameFrame extends JFrame {
                   sprite.vspeed = 0;
 
                 if (sprite2.id == Sprite.KOOPA) {
-                	sprite2.id=Sprite.KOOPA_SHELL;
-                    sprite2.hspeed=Sprite.SHELL_SPEED;
-                    movingSprites.add(sprite2);
-                    sprite.vspeed *= -1;
+                  sprite2.id = Sprite.KOOPA_SHELL;
+                  sprite2.hspeed = Sprite.SHELL_SPEED;
+                  movingSprites.add(sprite2);
+                  sprite.vspeed *= -1;
                 }
                 if (sprite2.id == Sprite.GOOMBA) {
                   sprites.remove(sprite2);
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
-                  sprite.id=Sprite.SUPER_MARIO;
+                  sprite.id = Sprite.SUPER_MARIO;
                   sprites.remove(sprite2);
                   sprite.update();
                 }
@@ -225,7 +232,7 @@ public class GameFrame extends JFrame {
                 	Sprite mush=new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.MUSHROOM);
                 	mush.setY(sprite2.getPixelY()-sprite2.width);
                     sprites.add(mush);
-                    sprite2.id=Sprite.BLOCK;
+                    sprite2.id = Sprite.BLOCK;
                     sprite2.update();
                   }
                 }
@@ -242,13 +249,13 @@ public class GameFrame extends JFrame {
                 if (sprite.vspeed > 0)
                   sprite.vspeed = 0;
                 if (sprite2.id == Sprite.KOOPA) {
-                	sprite2.id=Sprite.KOOPA_SHELL;
-                    sprite2.hspeed=Sprite.SHELL_SPEED;
-                    movingSprites.add(sprite2);
-                    sprite.vspeed *= -1;
-                }	
+                  sprite2.id = Sprite.KOOPA_SHELL;
+                  sprite2.hspeed = Sprite.SHELL_SPEED;
+                  movingSprites.add(sprite2);
+                  sprite.vspeed *= -1;
+                }
                 if (sprite2.id == Sprite.GOOMBA) {
-                  sprite.id=Sprite.MARIO;
+                  sprite.id = Sprite.MARIO;
                   sprite.update();
                   
                 }
