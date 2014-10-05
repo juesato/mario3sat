@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
 
 public class GameFrame extends JFrame {
@@ -11,6 +12,7 @@ public class GameFrame extends JFrame {
 	GamePane gp;
 	ArrayList<Sprite> sprites;
 	ArrayList<Sprite> movingSprites;
+	Sprite mario;
 	int winWidth, winHeight;
 	int winX, winY;
 	int stageX,stageY;
@@ -25,20 +27,29 @@ public class GameFrame extends JFrame {
 		winHeight = 32*20;
 		setSize(winWidth, winHeight);
 		
+		stageX = winWidth;
+		stageY = winHeight;
+		
 		winX = 0;
 		winY = 0;
 		
 		sprites = new ArrayList<Sprite>();
+		movingSprites = new ArrayList<Sprite>();
 		for(int i = 0; i < 20; i++){
 			for(int j = 0; j < 20; j++){
-				sprites.add(new Sprite(i*32.0/winWidth, j*32.0/winHeight, winWidth, winHeight, Sprite.BRICK));
+				if(i==0||i==19||j==0||j==19)
+					sprites.add(new Sprite(i*32.0/stageX, j*32.0/stageY, stageX, stageY, Sprite.BLOCK));
 			}
 		}
+		
+		mario = new Sprite(100.0/stageX, 100.0/stageY, stageX, stageY, Sprite.MARIO);
+		sprites.add(mario);
+		movingSprites.add(mario);
 		
 		setVisible(true);
 	}
 	
-	public class GamePane extends JPanel{
+	public class GamePane extends JPanel implements KeyListener{
 		public void paintComponent(Graphics g){
 //			try {
 //				BufferedImage img = ImageIO.read(new File("brick.png"));
@@ -49,6 +60,29 @@ public class GameFrame extends JFrame {
 			for(Sprite s : sprites){
 				System.out.println("Drawing " + s);
 				s.draw(g, winX, winY, winWidth, winHeight);
+			}
+		}
+
+		public void keyTyped(KeyEvent e) {
+		}
+
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode()==KeyEvent.VK_LEFT){
+				mario.hspeed=-128.0/stageX;
+			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+				mario.hspeed=128.0/stageX;
+			}else if(e.getKeyCode()==KeyEvent.VK_UP){
+				mario.vspeed=-128.0/stageY;
+			}
+		}
+
+		public void keyReleased(KeyEvent e) {
+			if(e.getKeyCode()==KeyEvent.VK_LEFT){
+				if(mario.hspeed<0)
+					mario.hspeed=0;
+			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+				if(mario.hspeed>0)
+					mario.hspeed=0;
 			}
 		}
 	}
