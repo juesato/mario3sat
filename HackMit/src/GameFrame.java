@@ -76,7 +76,7 @@ public class GameFrame extends JFrame {
 		}
 
 		public void keyPressed(KeyEvent e) {
-			System.out.println("key pressed");
+//			System.out.println("key pressed");
 			if(e.getKeyCode()==KeyEvent.VK_LEFT){
 				mario.hspeed=-256.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
