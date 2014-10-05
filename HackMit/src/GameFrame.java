@@ -159,6 +159,7 @@ public class GameFrame extends JFrame {
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
                   sprite.id=Sprite.SUPER_MARIO;
+                  sprites.remove(sprite2);
                   sprite.update();
                 }
               }
@@ -216,12 +217,14 @@ public class GameFrame extends JFrame {
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
                   sprite.id=Sprite.SUPER_MARIO;
+                  sprites.remove(sprite2);
                   sprite.update();
                 }
                 if (sprite2.id == Sprite.QUESTION_BLOCK) {
-                  if (sprite.vspeed < 0) {                    
-                    sprites.add(new Sprite(sprite2.x, sprite2.y - sprite2.width, stageX, stageY,
-                        Sprite.MUSHROOM));
+                  if (sprite.vspeed < 0) {      
+                	Sprite mush=new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.MUSHROOM);
+                	mush.setY(sprite2.getPixelY()-sprite2.width);
+                    sprites.add(mush);
                     sprite2.id=Sprite.BLOCK;
                     sprite2.update();
                   }
@@ -230,8 +233,10 @@ public class GameFrame extends JFrame {
 
               }
               if (sprite.id == sprite.SUPER_MARIO) {
-                if (sprite.vspeed > 0)
+                if (sprite.vspeed > 0){
                   sprite.setY(sprite2.getPixelY() - sprite.height);
+                  mario.airborne=false;
+                }
                 else
                   sprite.setY(sprite2.getPixelY() + sprite2.height);
                 if (sprite.vspeed > 0)
@@ -249,8 +254,9 @@ public class GameFrame extends JFrame {
                 }
                 if (sprite2.id == Sprite.QUESTION_BLOCK) {
                   if (sprite.vspeed < 0) {
-                    sprites.add(new Sprite(sprite2.x, sprite2.y - sprite2.width, stageX, stageY,
-                        Sprite.MUSHROOM));
+                	Sprite mush=new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.MUSHROOM);
+                  	mush.setY(sprite2.getPixelY()-sprite2.width);
+                    sprites.add(mush);
                     sprite2.id=Sprite.BLOCK;
                     sprite2.update();
                   }
