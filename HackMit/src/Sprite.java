@@ -3,6 +3,17 @@ public class Sprite {
 	public int width,height;
 	public double hspeed,vspeed;
 	private int stageX,stageY;
+	public int id;
+	
+	public final int MARIO=0;
+	public final int KOOPA=1;
+	public final int KOOPA_SHELL=2;
+	public final int GUMBA=3;
+	public final int MUSHROOM=4;
+	public final int QUESTION_BLOCK=5;
+	public final int BRICK=6;
+	public final int BLOCK=7;
+	public final int SUPER_MARIO=8;
 	
 	public Sprite(){
 		
@@ -13,14 +24,22 @@ public class Sprite {
 		this.stageY=stageYIn;
 	}
 	
-	public int checkHorCollide(Sprite in){
-		//TODO
-		return 0;
+	public Sprite(int idin){
+		this.id=idin;
 	}
 	
-	public int checkVertCollide(Sprite in){
+	public Sprite(int stageXIn,int stageYIn, int idin){
+		this.id=idin;
+	}
+	
+	public boolean checkHorCollide(Sprite in){
 		//TODO
-		return 0;
+		return false;
+	}
+	
+	public boolean checkVertCollide(Sprite in){
+		//TODO
+		return false;
 	}
 	
 	public int getPixelX(){
