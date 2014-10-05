@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+//import Main.grid;
+
 public class GameFrame extends JFrame {
   GamePane gp;
   ArrayList<Sprite> sprites;
@@ -43,6 +45,11 @@ public class GameFrame extends JFrame {
     
 //    Gadget gadget = new Gadget("CROSSOVER_DR", false);
 //    sprites = gadget.getSprites();
+    
+    MapGrid m = new MapGrid(Main.shittyGetter());
+    System.out.println("THIS IS HOW MANY SPRITES THERE ARE");
+    System.out.println(m.allSprites().size());
+    sprites = m.allSprites();
 
     sprites.add(new Sprite(2 * 32.0 / stageX, 36 * 32.0 / stageY, stageX, stageY,
         Sprite.QUESTION_BLOCK));

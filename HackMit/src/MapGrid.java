@@ -7,10 +7,31 @@ public class MapGrid {
 	
 	public Map<Integer, String> gadgetIdToName = new HashMap<>();
 	public Map<Integer, Boolean> gadgetIdToFlip = new HashMap<>();
+	
+	public ArrayList<Sprite> sprites;
 
 	public MapGrid(ArrayList<ArrayList<Integer>> grid) {
 		init();
-		
+		int rows = grid.size();
+		System.out.println("ROWS");
+		System.out.println(rows);
+		int cols = grid.get(1).size();
+		for (int r = 0; r < rows; r++) {
+			ArrayList<Integer> cur = grid.get(r);
+			for (int c = 0; c < cur.size(); c++) {
+				int id = cur.get(c);
+				if (gadgetIdToName.containsKey(id)) {
+					Gadget g = new Gadget(gadgetIdToName.get(id), gadgetIdToFlip.get(id), rows, cols, r, c);
+					for (Sprite s : g.getSprites()) {
+						sprites.add(s);						
+					}
+				}				
+			}
+		}
+	}
+	
+	public ArrayList<Sprite> allSprites() {
+		return this.sprites;
 	}
 	
 	public void init() {

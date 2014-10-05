@@ -91,14 +91,19 @@ public class Main extends JApplet implements ActionListener {
 
   }
 
-
+  public static ArrayList<ArrayList<Integer>> grid;
+  
+  public static ArrayList<ArrayList<Integer>> shittyGetter() {
+	  return grid;
+  }
+  
   public void actionPerformed(ActionEvent e)
   {
     if (e.getSource() == input) {
       satInput = input.getText();
       parse(satInput);
       
-      ArrayList<ArrayList<Integer>> grid = AbstractMapGrid.getSymbolicGrid(clauses, numVars);
+      grid = AbstractMapGrid.getSymbolicGrid(clauses, numVars);
 
       if (isGood(clauses)) {
         System.out.println("YEEEEEEAH");
