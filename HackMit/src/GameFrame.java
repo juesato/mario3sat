@@ -27,17 +27,17 @@ public class GameFrame extends JFrame {
 		winHeight = 32*20;
 		setSize(winWidth, winHeight);
 		
-		stageX = winWidth;
-		stageY = winHeight;
+		stageX = 32*40;
+		stageY = 32*40;
 		
 		winX = 0;
 		winY = 0;
 		
 		sprites = new ArrayList<Sprite>();
 		movingSprites = new ArrayList<Sprite>();
-		for(int i = 0; i < 20; i++){
-			for(int j = 0; j < 20; j++){
-				if(i==0||i==19||j==0||j==19)
+		for(int i = 0; i < 40; i++){
+			for(int j = 0; j < 40; j++){
+				if(i==0||i==39||j==0||j==39)
 					sprites.add(new Sprite(i*32.0/stageX, j*32.0/stageY, stageX, stageY, Sprite.BLOCK));
 			}
 		}
@@ -78,9 +78,9 @@ public class GameFrame extends JFrame {
 		public void keyPressed(KeyEvent e) {
 //			System.out.println("key pressed");
 			if(e.getKeyCode()==KeyEvent.VK_LEFT){
-				mario.hspeed=-256.0/stageX;
+				mario.hspeed=-175.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-				mario.hspeed=256.0/stageX;
+				mario.hspeed=175.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_UP){
 				if(!mario.airborne){
 					mario.airborne = true;
@@ -287,6 +287,8 @@ public class GameFrame extends JFrame {
 					}
 				}
 				//End step computations
+				winX = mario.getPixelX()-winWidth/2;
+				winY = mario.getPixelY()-winWidth/2;
 				gp.repaint();
 				long left = timestamp + stepSize - System.currentTimeMillis();
 				if(left > 0)
