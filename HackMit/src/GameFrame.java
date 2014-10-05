@@ -121,9 +121,9 @@ public class GameFrame extends JFrame {
       while (!done) {
         long timestamp = System.currentTimeMillis();
         // Begin step computations
-        for (Sprite sprite : movingSprites) {
+        for (Sprite sprite : (ArrayList<Sprite>)movingSprites.clone()) {
           sprite.x += sprite.hspeed / freq;
-          for (Sprite sprite2 : sprites) {
+          for (Sprite sprite2 : (ArrayList<Sprite>)sprites.clone()) {
             if (sprite2 == sprite) continue;
             if (sprite.checkHorCollide(sprite2) && sprite.checkVertCollide(sprite2)) {
               System.out.println("hor collision between " + sprite + " and " + sprite2);
@@ -146,9 +146,9 @@ public class GameFrame extends JFrame {
 
                 if (sprite2.id == Sprite.KOOPA) {
 
-                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.KOOPA_SHELL,
-                      Sprite.SHELL_SPEED));
-                  sprites.remove(sprite2);
+                  sprite2.id=Sprite.KOOPA_SHELL;
+                  sprite2.hspeed=Sprite.SHELL_SPEED;
+                  movingSprites.add(sprite2);
                 }
 
                 if (sprite2.id == Sprite.GOOMBA) {
@@ -156,8 +156,8 @@ public class GameFrame extends JFrame {
 
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
-                  sprites.add(new Sprite(sprite.x, sprite.y, stageX, stageY, Sprite.SUPER_MARIO));
-                  sprites.remove(sprite);
+                  sprite.id=Sprite.SUPER_MARIO;
+                  sprite.update();
                 }
               }
               if (sprite.id == Sprite.SUPER_MARIO) {
@@ -165,15 +165,14 @@ public class GameFrame extends JFrame {
                   sprite.setX(sprite2.getPixelX() - sprite.width);
                 else
                   sprite.setX(sprite2.getPixelX() + sprite2.width);
-                if (sprite2.id == sprite.KOOPA) {
-                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.KOOPA_SHELL,
-                      Sprite.SHELL_SPEED));
-                  sprites.remove(sprite2);
+                if (sprite2.id == Sprite.KOOPA) {
+                	sprite2.id=Sprite.KOOPA_SHELL;
+                    sprite2.hspeed=Sprite.SHELL_SPEED;
+                    movingSprites.add(sprite2);
                 }
                 if (sprite2.id == Sprite.GOOMBA) {
-                  sprites.add(new Sprite(sprite.x, sprite.y, stageX, stageY, Sprite.MARIO));
-                  sprites.remove(sprite);
-                  sprites.remove(sprite2);
+                  sprite.id=Sprite.MARIO;
+                  sprite.update();
 
                 }
               }
@@ -183,7 +182,7 @@ public class GameFrame extends JFrame {
           sprite.vspeed += Sprite.gravity / stageY / freq;
           sprite.y += sprite.vspeed / freq;
 
-          for (Sprite sprite2 : sprites) {
+          for (Sprite sprite2 : (ArrayList<Sprite>)sprites.clone()) {
             if (sprite2 == sprite) continue;
             if (sprite.checkVertCollide(sprite2) && sprite.checkHorCollide(sprite2)) {
               // System.out.println("vert collision between " + sprite + " and " + sprite2);
@@ -205,24 +204,24 @@ public class GameFrame extends JFrame {
                   sprite.vspeed = 0;
 
                 if (sprite2.id == Sprite.KOOPA) {
-                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.KOOPA_SHELL,
-                      Sprite.SHELL_SPEED));
-                  sprites.remove(sprite2);
-                  sprite.vspeed *= -1;
+                	sprite2.id=Sprite.KOOPA_SHELL;
+                    sprite2.hspeed=Sprite.SHELL_SPEED;
+                    movingSprites.add(sprite2);
+                    sprite.vspeed *= -1;
                 }
                 if (sprite2.id == Sprite.GOOMBA) {
                   sprites.remove(sprite2);
                 }
                 if (sprite2.id == Sprite.MUSHROOM) {
-                  sprites.add(new Sprite(sprite.x, sprite.y, stageX, stageY, Sprite.SUPER_MARIO));
-                  sprites.remove(sprite);
+                  sprite.id=Sprite.SUPER_MARIO;
+                  sprite.update();
                 }
                 if (sprite2.id == Sprite.QUESTION_BLOCK) {
-                  if (sprite.vspeed < 0) {
-                    sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.BLOCK));
+                  if (sprite.vspeed < 0) {                    
                     sprites.add(new Sprite(sprite2.x, sprite2.y - sprite2.width, stageX, stageY,
                         Sprite.MUSHROOM));
-                    sprites.remove(sprite2);
+                    sprite2.id=Sprite.BLOCK;
+                    sprite2.update();
                   }
                 }
 
@@ -235,26 +234,26 @@ public class GameFrame extends JFrame {
                   sprite.setY(sprite2.getPixelY() + sprite2.height);
                 if (sprite.vspeed > 0)
                   sprite.vspeed = 0;
-                if (sprite2.id == sprite.KOOPA) {
-                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, sprite.KOOPA_SHELL,
-                      sprite.SHELL_SPEED));
-                  sprites.remove(sprite2);
-                  sprite.vspeed *= -1;
+                if (sprite2.id == Sprite.KOOPA) {
+                	sprite2.id=Sprite.KOOPA_SHELL;
+                    sprite2.hspeed=Sprite.SHELL_SPEED;
+                    movingSprites.add(sprite2);
+                    sprite.vspeed *= -1;
+                }	
+                if (sprite2.id == Sprite.GOOMBA) {
+                  sprite.id=Sprite.MARIO;
+                  sprite.update();
+                  
                 }
-                if (sprite2.id == sprite.GOOMBA) {
-                  sprites.add(new Sprite(sprite.x, sprite.y, stageX, stageY, sprite.MARIO));
-                  sprites.remove(sprite);
-                  sprites.remove(sprite2);
-                }
-                if (sprite2.id == sprite.QUESTION_BLOCK) {
+                if (sprite2.id == Sprite.QUESTION_BLOCK) {
                   if (sprite.vspeed < 0) {
-                    sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, sprite.BLOCK));
                     sprites.add(new Sprite(sprite2.x, sprite2.y - sprite2.width, stageX, stageY,
-                        sprite.MUSHROOM));
-                    sprites.remove(sprite2);
+                        Sprite.MUSHROOM));
+                    sprite2.id=Sprite.BLOCK;
+                    sprite2.update();
                   }
                 }
-                if (sprite2.id == sprite.BRICK) {
+                if (sprite2.id == Sprite.BRICK) {
                   if (sprite.vspeed < 0) {
                     sprites.remove(sprite2);
                     sprite.vspeed = 0;
@@ -262,23 +261,22 @@ public class GameFrame extends JFrame {
                 }
 
               }
-              if (sprite.id == sprite.CROUCH_MARIO) {
+              if (sprite.id == Sprite.CROUCH_MARIO) {
                 if (sprite.vspeed > 0)
                   sprite.setY(sprite2.getPixelY() - sprite.height);
                 else
                   sprite.setY(sprite2.getPixelY() + sprite2.height);
 
-                if (sprite2.id == sprite.KOOPA) {
-                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, sprite.KOOPA_SHELL,
-                      sprite.SHELL_SPEED));
+                if (sprite2.id == Sprite.KOOPA) {
+                  sprites.add(new Sprite(sprite2.x, sprite2.y, stageX, stageY, Sprite.KOOPA_SHELL,
+                      Sprite.SHELL_SPEED));
                   sprites.remove(sprite2);
                 }
-                if (sprite2.id == sprite.GOOMBA) {
-                  sprites.add(new Sprite(sprite.x, sprite.y, stageX, stageY, sprite.MARIO));
-                  sprites.remove(sprite);
-                  sprites.remove(sprite2);
+                if (sprite2.id == Sprite.GOOMBA) {
+                  sprite.id=Sprite.MARIO;
+                  sprite.update();
                 }
-                if (sprite2.id == sprite.BRICK) {
+                if (sprite2.id == Sprite.BRICK) {
                   if (sprite.vspeed > 0) {
                     sprites.remove(sprite2);
                     sprite.vspeed = 0;

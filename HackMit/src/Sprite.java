@@ -39,26 +39,7 @@ public class Sprite {
 	
 	public Sprite(int idin){
 		this.id=idin;
-		File imf;
-		switch(id){
-		case KOOPA: imf=new File("koopa_red.gif"); break;
-		case KOOPA_SHELL: imf=new File("koopa_shell_red.gif"); break;
-		case GOOMBA: imf=new File("goomba.jpg"); break;
-		case MUSHROOM: imf=new File("mushroom.png"); break;
-		case QUESTION_BLOCK: imf=new File("mystery_box.gif"); break;
-		case BRICK: imf=new File("brick.png"); break;
-		case BLOCK: imf=new File("empty_block.gif"); break;
-		case SUPER_MARIO: imf=new File("mario_large.gif"); break;
-		case CROUCH_MARIO: imf=new File("mario_crouch.gif"); break;
-		default: imf=new File("mario_small.gif"); break;
-		}
-		try {
-			im=ImageIO.read(imf);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		width=im.getWidth();
-		height=im.getHeight();
+		update();
 	}
 	
 	public Sprite(int stageXIn,int stageYIn, int idin){
@@ -117,6 +98,28 @@ public class Sprite {
 	}
 	public int getGridY(){
 		return (int)(y*stageY/height+.5);
+	}
+	public void update(){
+		File imf;
+		switch(id){
+		case KOOPA: imf=new File("koopa_red.gif"); break;
+		case KOOPA_SHELL: imf=new File("koopa_shell_red.gif"); break;
+		case GOOMBA: imf=new File("goomba.jpg"); break;
+		case MUSHROOM: imf=new File("mushroom.png"); break;
+		case QUESTION_BLOCK: imf=new File("mystery_box.gif"); break;
+		case BRICK: imf=new File("brick.png"); break;
+		case BLOCK: imf=new File("empty_block.gif"); break;
+		case SUPER_MARIO: imf=new File("mario_large.gif"); break;
+		case CROUCH_MARIO: imf=new File("mario_crouch.gif"); break;
+		default: imf=new File("mario_small.gif"); break;
+		}
+		try {
+			im=ImageIO.read(imf);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		width=im.getWidth();
+		height=im.getHeight();
 	}
 	
 	public void draw(Graphics g, int winX, int winY, int winWidth, int winHeight){
