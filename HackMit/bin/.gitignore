@@ -1,2 +1,5 @@
 /Main.class
 /Main$Clause.class
+/GameFrame.class
+/GameFrame$GamePane.class
+/GameFrame$GameThread.class
