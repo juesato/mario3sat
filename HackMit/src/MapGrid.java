@@ -37,32 +37,17 @@ public class MapGrid {
 	public void init() {
 		gadgetIdToName.put(21, "VARIABLE_L");
 		gadgetIdToFlip.put(21,  false);
-		
 		gadgetIdToName.put(22, "VARIABLE_L");
 		gadgetIdToFlip.put(22,  true);
-		
-		gadgetIdToName.put(31, "");
-		gadgetIdToFlip.put(21,  false);
-		
-		gadgetIdToName.put(21, "VARIABLE_L");
-		gadgetIdToFlip.put(21,  false);
-		
-		gadgetIdToName.put(21, "VARIABLE_L");
-		gadgetIdToFlip.put(21,  false);
-		
-		gadgetIdToName.put(21, "VARIABLE_L");
-		gadgetIdToFlip.put(21,  false);
 		
 		gadgetIdToName.put(50, "PATH_UD");
 		gadgetIdToFlip.put(50,  false);
 		gadgetIdToName.put(51, "PATH_UD");
 		gadgetIdToFlip.put(51,  false);
-		
 		gadgetIdToName.put(52, "PATH_RL");
 		gadgetIdToFlip.put(52,  false);
 		gadgetIdToName.put(53, "PATH_RL");
 		gadgetIdToFlip.put(53,  false);
-		
 		gadgetIdToName.put(54, "PATH_DROP");
 		gadgetIdToFlip.put(54,  false);	
 		
