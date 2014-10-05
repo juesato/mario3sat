@@ -35,6 +35,7 @@ public class Sprite {
     	return sup[id] + " " + getPixelX() + " " + getPixelY();
   	}
 	
+  	public boolean airborne = true;
 	
 	public Sprite(int idin){
 		this.id=idin;
