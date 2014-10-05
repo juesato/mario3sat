@@ -50,9 +50,14 @@ public class GameFrame extends JFrame {
 		gt.start();
 		
 		setVisible(true);
+		gp.requestFocusInWindow();
 	}
 	
 	public class GamePane extends JPanel implements KeyListener{
+		public GamePane(){
+			addKeyListener(this);
+		}
+		
 		public void paintComponent(Graphics g){
 //			try {
 //				BufferedImage img = ImageIO.read(new File("brick.png"));
@@ -71,12 +76,13 @@ public class GameFrame extends JFrame {
 		}
 
 		public void keyPressed(KeyEvent e) {
+			System.out.println("key pressed");
 			if(e.getKeyCode()==KeyEvent.VK_LEFT){
 				mario.hspeed=-128.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
 				mario.hspeed=128.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_UP){
-				mario.vspeed=-128.0/stageY;
+				mario.vspeed=-500.0/stageY;
 			}
 		}
 
@@ -113,7 +119,7 @@ public class GameFrame extends JFrame {
 					for(Sprite sprite2:sprites){
 						if(sprite2==sprite) continue;
 						if(sprite.checkHorCollide(sprite2) && sprite.checkVertCollide(sprite2)){
-							System.out.println("collision between " + sprite + " and " + sprite2);
+							System.out.println("hor collision between " + sprite + " and " + sprite2);
 							if(sprite.id==Sprite.KOOPA_SHELL){
 								if(sprite2.id==Sprite.BRICK){
 									sprites.remove(sprite2);
@@ -160,13 +166,13 @@ public class GameFrame extends JFrame {
 					for(Sprite sprite2:sprites){
 						if(sprite2==sprite) continue;
 						if(sprite.checkVertCollide(sprite2) && sprite.checkHorCollide(sprite2)){
-							System.out.println("collision between " + sprite + " and " + sprite2);
+//							System.out.println("vert collision between " + sprite + " and " + sprite2);
 							if(sprite.id==Sprite.KOOPA_SHELL){								
 								sprite.setY(sprite2.getPixelY()-sprite.height-1);
 								sprite.vspeed=0;
 							}
 							if(sprite.id==Sprite.MARIO){
-								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								sprite.setY(sprite2.getPixelY()-sprite.height);
 								if(sprite.vspeed>0)
 									sprite.vspeed=0;
 								

@@ -25,7 +25,7 @@ public class Sprite {
 	public static final int CROUCH_MARIO=9;
 	
 	public static final int SHELL_SPEED=12;
-	public static final double gravity=256;
+	public static final double gravity=800;
 	
 	public String[] sup = {"Mario", "Koopa", "Koopa shell", "Goomba", "Mushroom", "Question block",
       "Brick", "Block", "Super mario","Crouch Mario"};
