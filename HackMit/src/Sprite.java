@@ -105,6 +105,18 @@ public class Sprite {
 	public void setY(int pixelY){
 		y = ((double)pixelY)/stageY;
 	}
+	public void setGridX(int gridX){
+		x = width/stageX*gridX;
+	}
+	public void setGridY(int gridY){
+		y = height/stageY*gridY;
+	}
+	public int getGridX(){
+		return (int)(x*stageX/width+.5);
+	}
+	public int getGridY(){
+		return (int)(y*stageY/height+.5);
+	}
 	
 	public void draw(Graphics g, int winX, int winY, int winWidth, int winHeight){
 		int pixelX = getPixelX();
