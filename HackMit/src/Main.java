@@ -94,6 +94,7 @@ public class Main extends JApplet implements ActionListener {
   public static ArrayList<ArrayList<Integer>> grid;
   
   public static ArrayList<ArrayList<Integer>> shittyGetter() {
+	  
 	  return grid;
   }
   
@@ -104,7 +105,7 @@ public class Main extends JApplet implements ActionListener {
       parse(satInput);
       
       grid = AbstractMapGrid.getSymbolicGrid(clauses, numVars);
-
+      System.out.println("Your Mom" + grid.size());
       if (isGood(clauses)) {
         System.out.println("YEEEEEEAH");
       } else {

@@ -274,6 +274,15 @@ public class AbstractMapGrid {
 	      	System.out.print("\n");
 	      }
 	      
-	      return new ArrayList<ArrayList<Integer>>();
+	      ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+	      for (int i = 0; i < rows; i++) {
+	    	  ans.add(new ArrayList<Integer>());
+	    	  for (int j = 0; j < cols; j++) {
+	    		  ans.get(i).add(tempGrid[i][j]);
+	    	  }
+	      }
+	      
+	      return ans;
+//	      return new ArrayList<ArrayList<Integer>>();
 	  }
 }

@@ -8,7 +8,7 @@ public class MapGrid {
 	public Map<Integer, String> gadgetIdToName = new HashMap<>();
 	public Map<Integer, Boolean> gadgetIdToFlip = new HashMap<>();
 	
-	public ArrayList<Sprite> sprites;
+	public ArrayList<Sprite> sprites = new ArrayList<>();
 
 	public MapGrid(ArrayList<ArrayList<Integer>> grid) {
 		init();
