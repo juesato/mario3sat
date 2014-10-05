@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JApplet;
 
 
+@SuppressWarnings("serial")
 public class Main extends JApplet implements ActionListener {
   public String satInput;
   public TextField input = new TextField(40);
@@ -98,7 +99,7 @@ public class Main extends JApplet implements ActionListener {
       parse(satInput);
 
       if (isGood(clauses)) {
-        System.out.println("YEEEEEEAH NIGGA");
+        System.out.println("YEEEEEEAH");
       } else {
         System.out.println("You dun fucked up");
       }
@@ -118,6 +119,7 @@ public class Main extends JApplet implements ActionListener {
        */
     }
     else if (e.getSource() == render) {
+      @SuppressWarnings("unused")
       GameFrame f = new GameFrame();
     }
 
