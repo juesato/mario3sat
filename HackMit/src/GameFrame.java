@@ -35,14 +35,20 @@ public class GameFrame extends JFrame {
 	public class GameThread extends Thread{
 		boolean done = false;
 		long stepSize = (long)(1000.0/30.0);
+		ArrayList<Sprite> sprites;
+		ArrayList<Sprite> movingSprites;
+		
+		public GameThread(ArrayList<Sprite> spritesIn,ArrayList<Sprite> movingSpritesIn){
+			this.sprites=spritesIn;
+			this.movingSprites=movingSpritesIn;
+		}
 		
 		public void run(){
-			ArrayList<Sprite> sprites;
-			ArrayList<Sprite> movingSprites;
+			
 			while(!done){
 				long timestamp = System.currentTimeMillis();
 				//Begin step computations
-				for(Sprite x : sprites){
+				for(Sprite x : movingSprites){
 					
 				}
 				//End step computations
