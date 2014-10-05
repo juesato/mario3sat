@@ -72,7 +72,6 @@ public class GameFrame extends JFrame {
 				//Begin step computations
 				for(Sprite sprite : movingSprites){
 					sprite.x+=sprite.hspeed/freq;
-					sprite.y+=sprite.vspeed/freq;
 					for(Sprite sprite2:sprites){
 						if(sprite.checkHorCollide(sprite2)){
 							if(sprite.id==sprite.KOOPA_SHELL){
@@ -112,17 +111,97 @@ public class GameFrame extends JFrame {
 									
 								}
 							}
-							
-								
-						
-							
 						}
+					}
+
+					sprite.vspeed+=16.0/stageY/freq;
+					sprite.y+=sprite.vspeed/freq;
+
+					for(Sprite sprite2:sprites){
 						if(sprite.checkVertCollide(sprite2)){
 							if(sprite.id==sprite.KOOPA_SHELL){								
 								sprite.setY(sprite2.getPixelY()-sprite.height-1);
 								sprite.vspeed=0;
 							}
+							if(sprite.id==sprite.MARIO){
+								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								if(sprite.vspeed>0)
+									sprite.vspeed=0;
+								
+								if(sprite2.id==sprite.KOOPA){
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.remove(sprite2);
+									sprite.vspeed*=-1;
+								}
+								if(sprite2.id==sprite.GOOMBA){
+									sprites.remove(sprite2);
+								}
+								if(sprite2.id==sprite.MUSHROOM){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.SUPER_MARIO));
+									sprites.remove(sprite);
+								}
+								if(sprite2.id==sprite.QUESTION_BLOCK){
+									if(sprite.vspeed<0){
+										sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.BLOCK));
+										sprites.add(new Sprite(sprite2.x,sprite2.y-sprite2.width,stageX,stageY,sprite.MUSHROOM));
+										sprites.remove(sprite2);
+									}
+								}
+								
+								
+							}
+							if(sprite.id==sprite.SUPER_MARIO){
+								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								if(sprite.vspeed>0)
+									sprite.vspeed=0;
+								if(sprite2.id==sprite.KOOPA){
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.remove(sprite2);
+									sprite.vspeed*=-1;
+								}
+								if(sprite2.id==sprite.GOOMBA){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.MARIO));
+									sprites.remove(sprite);
+									sprites.remove(sprite2);
+								}
+								if(sprite2.id==sprite.QUESTION_BLOCK){
+									if(sprite.vspeed<0){
+										sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.BLOCK));
+										sprites.add(new Sprite(sprite2.x,sprite2.y-sprite2.width,stageX,stageY,sprite.MUSHROOM));
+										sprites.remove(sprite2);
+									}
+								}
+								if(sprite2.id==sprite.BRICK){
+									if(sprite.vspeed<0){
+										sprites.remove(sprite2);
+										sprite.vspeed=0;
+									}
+								}
+								
+							}
+							if(sprite.id==sprite.CROUCH_MARIO){
+								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								
+								if(sprite2.id==sprite.KOOPA){
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.remove(sprite2);
+								}
+								if(sprite2.id==sprite.GOOMBA){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.MARIO));
+									sprites.remove(sprite);
+									sprites.remove(sprite2);
+								}
+								if(sprite2.id==sprite.BRICK){
+									if(sprite.vspeed>0){
+										sprites.remove(sprite2);
+										sprite.vspeed=0;
+									}
+								}
+								if(sprite.vspeed>0)
+									sprite.vspeed=0;
+							}
 						}
+						
 					}
 				}
 				//End step computations
