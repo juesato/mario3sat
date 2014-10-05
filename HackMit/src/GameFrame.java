@@ -13,6 +13,7 @@ public class GameFrame extends JFrame {
 	ArrayList<Sprite> movingSprites;
 	int winWidth, winHeight;
 	int winX, winY;
+	int stageX,stageY;
 	
 	public GameFrame(){
 		super("3-Sat as Mario");
@@ -78,13 +79,48 @@ public class GameFrame extends JFrame {
 								if(sprite2.id==sprite.BRICK){
 									sprites.remove(sprite2);
 								}
-								sprite.x=sprite2.x+(sprite2.x-sprite.x);
+								sprite.setX(sprite2.getPixelX()-sprite.width-1);
 								sprite.hspeed*=-1;
 							}
 							if(sprite.id==sprite.MARIO){
+								sprite.setX(sprite2.getPixelX()-sprite.width-1);
 								if(sprite2.id==sprite.KOOPA){
 									
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.remove(sprite2);
 								}
+								
+								if(sprite2.id==sprite.GOOMBA){
+									sprites.remove(sprite2);
+									
+								}
+								if(sprite2.id==sprite.MUSHROOM){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.SUPER_MARIO));
+									sprites.remove(sprite);
+								}
+							}
+							if(sprite.id==sprite.SUPER_MARIO){
+								sprite.setX(sprite2.getPixelX()-sprite.width-1);
+								if(sprite2.id==sprite.KOOPA){
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.remove(sprite2);
+								}
+								if(sprite2.id==sprite.GOOMBA){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.MARIO));
+									sprites.remove(sprite);
+									sprites.remove(sprite2);
+									
+								}
+							}
+							
+								
+								
+							
+						}
+						if(sprite.checkVertCollide(sprite2)){
+							if(sprite.id==sprite.KOOPA_SHELL){								
+								sprite.x=sprite2.x+(sprite2.x-sprite.x);
+								sprite.hspeed=0;
 							}
 						}
 					}

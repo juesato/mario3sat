@@ -24,6 +24,17 @@ public class Sprite {
 	public static final int SUPER_MARIO=8;
 	public static final int CROUCH_MARIO=9;
 	
+	public final int SHELL_SPEED=12;
+	
+	public String[] sup = {"Mario", "Koopa", "Koopa shell", "Gumba", "Mushroom", "Question block",
+      "Brick", "Block", "Super mario","Crouch Mario"};
+
+  	
+  	public String toString() {
+    	return sup[id] + " " + getPixelX() + " " + getPixelY();
+  	}
+	
+	
 	public Sprite(int idin){
 		this.id=idin;
 		File imf;
@@ -56,6 +67,11 @@ public class Sprite {
 		this(stageXIn, stageYIn, idin);
 		x = xIn;
 		y = yIn;
+	}
+	
+	public Sprite(double xIn, double yIn, int stageXIn, int stageYIn, int idin, double hspeedIn){
+		this(xIn, yIn, stageXIn, stageYIn, idin);
+		hspeed=hspeedIn;
 	}
 	
 	public boolean checkHorCollide(Sprite in){
