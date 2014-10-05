@@ -124,11 +124,19 @@ public class GameFrame extends JFrame {
 								if(sprite2.id==Sprite.BRICK){
 									sprites.remove(sprite2);
 								}
-								sprite.setX(sprite2.getPixelX()-sprite.width-1);
+								if(sprite.hspeed>0)
+									sprite.setX(sprite2.getPixelX()-sprite.width);
+								else
+									sprite.setX(sprite2.getPixelX()+sprite.width);
 								sprite.hspeed*=-1;
 							}
 							if(sprite.id==Sprite.MARIO){
-								sprite.setX(sprite2.getPixelX()-sprite.width);
+								if(sprite.hspeed>0)
+									sprite.setX(sprite2.getPixelX()-sprite.width);
+								else
+									sprite.setX(sprite2.getPixelX()+sprite.width);
+								
+								
 								if(sprite2.id==Sprite.KOOPA){
 									
 									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.KOOPA_SHELL,Sprite.SHELL_SPEED));
@@ -145,7 +153,10 @@ public class GameFrame extends JFrame {
 								}
 							}
 							if(sprite.id==Sprite.SUPER_MARIO){
-								sprite.setX(sprite2.getPixelX()-sprite.width-1);
+								if(sprite.hspeed>0)
+									sprite.setX(sprite2.getPixelX()-sprite.width);
+								else
+									sprite.setX(sprite2.getPixelX()+sprite.width);
 								if(sprite2.id==sprite.KOOPA){
 									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.KOOPA_SHELL,Sprite.SHELL_SPEED));
 									sprites.remove(sprite2);
@@ -168,11 +179,14 @@ public class GameFrame extends JFrame {
 						if(sprite.checkVertCollide(sprite2) && sprite.checkHorCollide(sprite2)){
 //							System.out.println("vert collision between " + sprite + " and " + sprite2);
 							if(sprite.id==Sprite.KOOPA_SHELL){								
-								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								sprite.setY(sprite2.getPixelY()-sprite.height);
 								sprite.vspeed=0;
 							}
 							if(sprite.id==Sprite.MARIO){
-								sprite.setY(sprite2.getPixelY()-sprite.height);
+								if(sprite.vspeed>0)
+									sprite.setY(sprite2.getPixelY()-sprite.height);
+								else
+									sprite.setY(sprite2.getPixelY()+sprite.height);
 								if(sprite.vspeed>0)
 									sprite.vspeed=0;
 								
@@ -199,7 +213,10 @@ public class GameFrame extends JFrame {
 								
 							}
 							if(sprite.id==sprite.SUPER_MARIO){
-								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								if(sprite.vspeed>0)
+									sprite.setY(sprite2.getPixelY()-sprite.height);
+								else
+									sprite.setY(sprite2.getPixelY()+sprite.height);
 								if(sprite.vspeed>0)
 									sprite.vspeed=0;
 								if(sprite2.id==sprite.KOOPA){
@@ -228,7 +245,10 @@ public class GameFrame extends JFrame {
 								
 							}
 							if(sprite.id==sprite.CROUCH_MARIO){
-								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								if(sprite.vspeed>0)
+									sprite.setY(sprite2.getPixelY()-sprite.height);
+								else
+									sprite.setY(sprite2.getPixelY()+sprite.height);
 								
 								if(sprite2.id==sprite.KOOPA){
 									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
