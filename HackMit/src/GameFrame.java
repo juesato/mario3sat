@@ -23,8 +23,8 @@ public class GameFrame extends JFrame {
 		
 		gp = new GamePane();
 		setContentPane(gp);
-		winWidth = 32*20;
-		winHeight = 32*20;
+		winWidth = 32*22;
+		winHeight = 32*22;
 		setSize(winWidth, winHeight);
 		
 		stageX = 32*40;
