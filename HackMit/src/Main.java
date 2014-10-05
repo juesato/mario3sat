@@ -223,7 +223,7 @@ public class Main extends JApplet implements ActionListener {
       	System.out.println("WARNING: Drop changed to crossover");
       	return CROSSOVER_DL;
       }
-      if ((cur == PATH_D && added == PATH_R) || (cur == PATH_D && added == PATH_R)) {
+      if ((cur == PATH_D && added == PATH_R) || (cur == PATH_R && added == PATH_D)) {
           return CROSSOVER_DR;
       }
       if ((cur == PATH_DROP && added == PATH_R) || (cur == PATH_R && added == PATH_DROP)) {
@@ -232,6 +232,9 @@ public class Main extends JApplet implements ActionListener {
       }
       if (added == ELBOW_T_INV || cur == ELBOW_T_INV) {
       	return ELBOW_T_INV;
+      }
+      if ((added == ELBOW_T || cur == ELBOW_T) && (added == PATH_L || added == PATH_R || added == PATH_L || added == PATH_R)) {
+    	  return ELBOW_T;
       }
       else {
           System.out.println("SOMETHING HAS GONE VERY WRONG!!!!");
@@ -263,28 +266,21 @@ public class Main extends JApplet implements ActionListener {
 
       // We need to keep track of which variables are in which columns
       int[] colToClauseVar = new int[cols];
-      for (int i = 0; i < cols; i++) {
-      	colToClauseVar[i] = -999;
-      }
       int clauseY = clause_row;
       int clauseX = clause_col;
       for (Clause clause : clauseList) {
       	for (int i = 0; i < 3; i++) {
-      		colToClauseVar[clauseX] = clause.vars[i];
+      		colToClauseVar[clauseX] = clause.vars[i] + 1;
       		if (clause.varNegs[i] == false) {
           		colToClauseVar[clauseX] *= -1;
       		}
       		clauseX += 2;
       	}
       }
-      for (int i = 0; i < cols; i++) {
-      	System.out.println(colToClauseVar[i]);
-      }
- 
-      
       
       int cur_x = var_col;
       for (int i = 0; i < v; i++) {
+    	  int cur_var = i+1;
           tempGrid[var_row][cur_x] = smartAdd(tempGrid[var_row][cur_x], VARIABLE[0]);
           
 
@@ -319,7 +315,17 @@ public class Main extends JApplet implements ActionListener {
           tempGrid[y][x] = smartAdd(tempGrid[y][x], ELBOW_UR);
           x++;
           for (; x < clause_col + 6*c + 2*v - 2*i - 1; x++) {
-          	tempGrid[y][x] = smartAdd(tempGrid[y][x], PATH_R);
+          	if (colToClauseVar[x] == cur_var) {
+          		tempGrid[y][x] = ELBOW_T;
+          		tempGrid[y][x+1] = ELBOW_T;
+          		for (int yt=y+1; yt < clause_row; yt++) {
+                  	tempGrid[yt][x] = smartAdd(tempGrid[yt][x], PATH_D);
+                  	tempGrid[yt][x+1] = smartAdd(tempGrid[yt][x+1], PATH_U);          			
+          		}
+          	}
+          	else {
+              	tempGrid[y][x] = smartAdd(tempGrid[y][x], PATH_R);
+          	}
           }
           if (i == v-1) { // Go from last variable to check clauses
               tempGrid[y][x] = smartAdd(tempGrid[y][x], ELBOW_T_INV);
@@ -354,7 +360,8 @@ public class Main extends JApplet implements ActionListener {
           }
           tempGrid[y][x] = smartAdd(tempGrid[y][x], PATH_DROP);
           
-          // Do the same thing for the next variable
+          // Do the same thing for the NOT of the variable
+          cur_var *= -1;
           cur_x++;
           tempGrid[var_row][cur_x] = smartAdd(tempGrid[var_row][cur_x], VARIABLE[1]);
           
@@ -379,9 +386,19 @@ public class Main extends JApplet implements ActionListener {
           tempGrid[y][x] = smartAdd(tempGrid[y][x], ELBOW_UR);
           x++;
           for (; x < clause_col + 6*c + 2*v - 2*i - 2; x++) {
-          	tempGrid[y][x] = smartAdd(tempGrid[y][x], PATH_R);
+            	if (colToClauseVar[x] == cur_var) {
+              		tempGrid[y][x] = ELBOW_T;
+              		tempGrid[y][x+1] = ELBOW_T;
+              		for (int yt=y+1; yt < clause_row; yt++) {
+                      	tempGrid[yt][x] = smartAdd(tempGrid[yt][x], PATH_D);
+                      	tempGrid[yt][x+1] = smartAdd(tempGrid[yt][x+1], PATH_U);          			
+              		}
+              	}
+              	else {
+                  	tempGrid[y][x] = smartAdd(tempGrid[y][x], PATH_R);
+              	}
           }
-
+          
           if (i == v-1) { // Go from last variable to check clauses
               tempGrid[y][x] = smartAdd(tempGrid[y][x], ELBOW_T_INV);
               int x_tmp = x+1;
