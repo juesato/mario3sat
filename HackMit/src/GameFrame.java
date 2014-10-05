@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.image.*;
 
@@ -36,10 +37,14 @@ public class GameFrame extends JFrame {
 		long stepSize = (long)(1000.0/30.0);
 		
 		public void run(){
+			ArrayList<Sprite> sprites;
+			ArrayList<Sprite> movingSprites;
 			while(!done){
 				long timestamp = System.currentTimeMillis();
 				//Begin step computations
-				
+				for(Sprite x : sprites){
+					
+				}
 				//End step computations
 				gp.repaint();
 				long left = timestamp + stepSize - System.currentTimeMillis();
