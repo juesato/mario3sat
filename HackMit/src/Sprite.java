@@ -12,12 +12,15 @@ public class Sprite {
 	public final int MARIO=0;
 	public final int KOOPA=1;
 	public final int KOOPA_SHELL=2;
-	public final int GUMBA=3;
+	public final int GOOMBA=3;
 	public final int MUSHROOM=4;
 	public final int QUESTION_BLOCK=5;
 	public final int BRICK=6;
 	public final int BLOCK=7;
 	public final int SUPER_MARIO=8;
+	public final int CROUCH_MARIO=9;
+	
+	public final int SHELL_SPEED=12;
 	
 	public Sprite(){
 	}
@@ -34,6 +37,23 @@ public class Sprite {
 	
 	public Sprite(int stageXIn,int stageYIn, int idin){
 		this.id=idin;
+	}
+	
+	public Sprite(double xIn,double yIn, int stageXIn,int stageYIn,int idin){
+		this.id=idin;
+		this.x=xIn;
+		this.y=yIn;
+		this.stageX=stageXIn;
+		this.stageY=stageYIn;
+	}
+	
+	public Sprite(double xIn,double yIn, int stageXIn,int stageYIn,int idin,double vspeedIn){
+		this.id=idin;
+		this.x=xIn;
+		this.y=yIn;
+		this.stageX=stageXIn;
+		this.stageY=stageYIn;
+		this.vspeed=vspeedIn;
 	}
 	
 	public boolean checkHorCollide(Sprite in){
