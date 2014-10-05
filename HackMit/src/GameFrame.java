@@ -9,6 +9,10 @@ import java.awt.image.*;
 public class GameFrame extends JFrame {
 	
 	GamePane gp;
+	ArrayList<Sprite> sprites;
+	ArrayList<Sprite> movingSprites;
+	int winWidth, winHeight;
+	int winX, winY;
 	int stageX,stageY;
 	
 	public GameFrame(){
@@ -17,18 +21,34 @@ public class GameFrame extends JFrame {
 		
 		gp = new GamePane();
 		setContentPane(gp);
-		setSize(32*20, 32*20);
+		winWidth = 32*20;
+		winHeight = 32*20;
+		setSize(winWidth, winHeight);
+		
+		winX = 0;
+		winY = 0;
+		
+		sprites = new ArrayList<Sprite>();
+		for(int i = 0; i < 20; i++){
+			for(int j = 0; j < 20; j++){
+				sprites.add(new Sprite(i*32.0/winWidth, j*32.0/winHeight, winWidth, winHeight, Sprite.BRICK));
+			}
+		}
 		
 		setVisible(true);
 	}
 	
 	public class GamePane extends JPanel{
 		public void paintComponent(Graphics g){
-			try {
-				BufferedImage img = ImageIO.read(new File("brick.png"));
-				g.drawImage(img, 64,64,Color.white, null);
-			} catch (IOException e) {
-				e.printStackTrace();
+//			try {
+//				BufferedImage img = ImageIO.read(new File("brick.png"));
+//				g.drawImage(img, 64,64,Color.white, null);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+			for(Sprite s : sprites){
+				System.out.println("Drawing " + s);
+				s.draw(g, winX, winY, winWidth, winHeight);
 			}
 		}
 	}
