@@ -22,6 +22,15 @@ public class Sprite {
 	
 	public final int SHELL_SPEED=12;
 	
+	public String[] sup = {"Mario", "Koopa", "Koopa shell", "Gumba", "Mushroom", "Question block",
+      "Brick", "Block", "Super mario","Crouch Mario"};
+
+  	
+  	public String toString() {
+    	return sup[id] + " " + getPixelX() + " " + getPixelY();
+  	}
+	
+	
 	public Sprite(){
 	}
 	
