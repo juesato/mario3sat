@@ -158,7 +158,7 @@ public class Main extends JApplet implements ActionListener{
         }
     }
     
-    public List<ArrayList<Integer>> getSymbolicGrid(List<Clause> clauseList, int vars) {    
+    public ArrayList<ArrayList<Integer>> getSymbolicGrid(ArrayList<Clause> clauseList, int vars) {    
 
         int c = clauseList.size();
         int v = vars;
