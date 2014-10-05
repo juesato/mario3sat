@@ -40,6 +40,8 @@ public class GameFrame extends JFrame {
 			}
 		}
 		
+		sprites.add(new Sprite(2*32.0/stageX, 36*32.0/stageY, stageX, stageY, Sprite.QUESTION_BLOCK));
+		
 		mario = new Sprite(100.0/stageX, 100.0/stageY, stageX, stageY, Sprite.MARIO);
 		sprites.add(mario);
 		movingSprites.add(mario);
