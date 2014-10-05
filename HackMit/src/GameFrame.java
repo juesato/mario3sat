@@ -78,11 +78,17 @@ public class GameFrame extends JFrame {
 		public void keyPressed(KeyEvent e) {
 			System.out.println("key pressed");
 			if(e.getKeyCode()==KeyEvent.VK_LEFT){
-				mario.hspeed=-128.0/stageX;
+				mario.hspeed=-256.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-				mario.hspeed=128.0/stageX;
+				mario.hspeed=256.0/stageX;
 			}else if(e.getKeyCode()==KeyEvent.VK_UP){
-				mario.vspeed=-500.0/stageY;
+				if(!mario.airborne){
+					mario.airborne = true;
+					mario.vspeed=-500.0/stageY;
+				}
+			}else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+				if(mario.id==Sprite.SUPER_MARIO)
+					mario.id=Sprite.CROUCH_MARIO;
 			}
 		}
 
@@ -93,6 +99,9 @@ public class GameFrame extends JFrame {
 			}else if(e.getKeyCode()==KeyEvent.VK_RIGHT){
 				if(mario.hspeed>0)
 					mario.hspeed=0;
+			}else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+				if(mario.id==Sprite.CROUCH_MARIO)
+					mario.id=Sprite.SUPER_MARIO;
 			}
 		}
 	}
@@ -183,8 +192,10 @@ public class GameFrame extends JFrame {
 								sprite.vspeed=0;
 							}
 							if(sprite.id==Sprite.MARIO){
-								if(sprite.vspeed>0)
+								if(sprite.vspeed>0){
 									sprite.setY(sprite2.getPixelY()-sprite.height);
+									sprite.airborne=false;
+								}
 								else
 									sprite.setY(sprite2.getPixelY()+sprite.height);
 								if(sprite.vspeed>0)
