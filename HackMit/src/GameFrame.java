@@ -34,7 +34,8 @@ public class GameFrame extends JFrame {
 	
 	public class GameThread extends Thread{
 		boolean done = false;
-		long stepSize = (long)(1000.0/30.0);
+		int freq=30;
+		long stepSize = (long)(1000/freq);
 		ArrayList<Sprite> sprites;
 		ArrayList<Sprite> movingSprites;
 		
@@ -48,8 +49,25 @@ public class GameFrame extends JFrame {
 			while(!done){
 				long timestamp = System.currentTimeMillis();
 				//Begin step computations
-				for(Sprite x : movingSprites){
-					
+				for(Sprite sprite : movingSprites){
+					sprite.x+=sprite.hspeed/freq;
+					sprite.y+=sprite.vspeed/freq;
+					for(Sprite sprite2:sprites){
+						if(sprite.checkHorCollide(sprite2)){
+							if(sprite.id==sprite.KOOPA_SHELL){
+								if(sprite2.id==sprite.BRICK){
+									sprites.remove(sprite2);
+								}
+								sprite.x=sprite2.x+(sprite2.x-sprite.x);
+								sprite.hspeed*=-1;
+							}
+							if(sprite.id==sprite.MARIO){
+								if(sprite2.id==sprite.KOOPA){
+									
+								}
+							}
+						}
+					}
 				}
 				//End step computations
 				gp.repaint();
