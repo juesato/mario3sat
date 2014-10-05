@@ -1,15 +1,14 @@
 import java.applet.Applet;
-import java.awt.Graphics;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.*;
+import javax.swing.*;
 import java.util.ArrayList;
 
 
-public class Main extends Applet implements ActionListener{
+public class Main extends JApplet implements ActionListener{
 	public String satInput;
 	TextField input=new TextField(40);
+	Button render = new Button("Render Level");
 	public int numVars;
 	public ArrayList<Clause> clauses=new ArrayList<Clause>();
 	
@@ -24,6 +23,9 @@ public class Main extends Applet implements ActionListener{
 		this.add(input);
 		input.addActionListener(this);
 		
+		render.setBounds(10,80,100,20);
+		this.add(render);
+		render.addActionListener(this);
 	}
 	public void paint(Graphics g){
 		
@@ -55,7 +57,9 @@ public class Main extends Applet implements ActionListener{
 				}
 			}
 		}
-		
+		else if(e.getSource()==render){
+			GameFrame f = new GameFrame();
+		}
 		
 	}
 	
