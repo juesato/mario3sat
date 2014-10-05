@@ -94,13 +94,13 @@ public class GameFrame extends JFrame {
 							}
 							
 								
-								
+						
 							
 						}
 						if(sprite.checkVertCollide(sprite2)){
 							if(sprite.id==sprite.KOOPA_SHELL){								
-								sprite.x=sprite2.x+(sprite2.x-sprite.x);
-								sprite.hspeed=0;
+								sprite.setY(sprite2.getPixelY()-sprite.height-1);
+								sprite.vspeed=0;
 							}
 						}
 					}
