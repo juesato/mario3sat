@@ -25,6 +25,8 @@ public class Main extends Applet implements ActionListener{
 		this.add(input);
 		input.addActionListener(this);
 		
+		
+		
 	}
 	public void paint(Graphics g){
 		
