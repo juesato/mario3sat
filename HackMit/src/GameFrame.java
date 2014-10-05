@@ -46,6 +46,9 @@ public class GameFrame extends JFrame {
 		sprites.add(mario);
 		movingSprites.add(mario);
 		
+		GameThread gt = new GameThread(sprites, movingSprites);
+		gt.start();
+		
 		setVisible(true);
 	}
 	
@@ -57,8 +60,9 @@ public class GameFrame extends JFrame {
 //			} catch (IOException e) {
 //				e.printStackTrace();
 //			}
+			g.fillRect(0, 0, winWidth, winHeight);
 			for(Sprite s : sprites){
-				System.out.println("Drawing " + s);
+//				System.out.println("Drawing " + s);
 				s.draw(g, winX, winY, winWidth, winHeight);
 			}
 		}
@@ -89,7 +93,7 @@ public class GameFrame extends JFrame {
 	
 	public class GameThread extends Thread{
 		boolean done = false;
-		int freq=30;
+		int freq=60;
 		long stepSize = (long)(1000/freq);
 		ArrayList<Sprite> sprites;
 		ArrayList<Sprite> movingSprites;
@@ -107,39 +111,41 @@ public class GameFrame extends JFrame {
 				for(Sprite sprite : movingSprites){
 					sprite.x+=sprite.hspeed/freq;
 					for(Sprite sprite2:sprites){
-						if(sprite.checkHorCollide(sprite2)){
-							if(sprite.id==sprite.KOOPA_SHELL){
-								if(sprite2.id==sprite.BRICK){
+						if(sprite2==sprite) continue;
+						if(sprite.checkHorCollide(sprite2) && sprite.checkVertCollide(sprite2)){
+							System.out.println("collision between " + sprite + " and " + sprite2);
+							if(sprite.id==Sprite.KOOPA_SHELL){
+								if(sprite2.id==Sprite.BRICK){
 									sprites.remove(sprite2);
 								}
 								sprite.setX(sprite2.getPixelX()-sprite.width-1);
 								sprite.hspeed*=-1;
 							}
-							if(sprite.id==sprite.MARIO){
-								sprite.setX(sprite2.getPixelX()-sprite.width-1);
-								if(sprite2.id==sprite.KOOPA){
+							if(sprite.id==Sprite.MARIO){
+								sprite.setX(sprite2.getPixelX()-sprite.width);
+								if(sprite2.id==Sprite.KOOPA){
 									
-									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.KOOPA_SHELL,Sprite.SHELL_SPEED));
 									sprites.remove(sprite2);
 								}
 								
-								if(sprite2.id==sprite.GOOMBA){
+								if(sprite2.id==Sprite.GOOMBA){
 									sprites.remove(sprite2);
 									
 								}
-								if(sprite2.id==sprite.MUSHROOM){
-									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.SUPER_MARIO));
+								if(sprite2.id==Sprite.MUSHROOM){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,Sprite.SUPER_MARIO));
 									sprites.remove(sprite);
 								}
 							}
-							if(sprite.id==sprite.SUPER_MARIO){
+							if(sprite.id==Sprite.SUPER_MARIO){
 								sprite.setX(sprite2.getPixelX()-sprite.width-1);
 								if(sprite2.id==sprite.KOOPA){
-									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.KOOPA_SHELL,Sprite.SHELL_SPEED));
 									sprites.remove(sprite2);
 								}
-								if(sprite2.id==sprite.GOOMBA){
-									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.MARIO));
+								if(sprite2.id==Sprite.GOOMBA){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,Sprite.MARIO));
 									sprites.remove(sprite);
 									sprites.remove(sprite2);
 									
@@ -148,36 +154,38 @@ public class GameFrame extends JFrame {
 						}
 					}
 
-					sprite.vspeed+=16.0/stageY/freq;
+					sprite.vspeed+=Sprite.gravity/stageY/freq;
 					sprite.y+=sprite.vspeed/freq;
 
 					for(Sprite sprite2:sprites){
-						if(sprite.checkVertCollide(sprite2)){
-							if(sprite.id==sprite.KOOPA_SHELL){								
+						if(sprite2==sprite) continue;
+						if(sprite.checkVertCollide(sprite2) && sprite.checkHorCollide(sprite2)){
+							System.out.println("collision between " + sprite + " and " + sprite2);
+							if(sprite.id==Sprite.KOOPA_SHELL){								
 								sprite.setY(sprite2.getPixelY()-sprite.height-1);
 								sprite.vspeed=0;
 							}
-							if(sprite.id==sprite.MARIO){
+							if(sprite.id==Sprite.MARIO){
 								sprite.setY(sprite2.getPixelY()-sprite.height-1);
 								if(sprite.vspeed>0)
 									sprite.vspeed=0;
 								
-								if(sprite2.id==sprite.KOOPA){
-									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.KOOPA_SHELL,sprite.SHELL_SPEED));
+								if(sprite2.id==Sprite.KOOPA){
+									sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.KOOPA_SHELL,Sprite.SHELL_SPEED));
 									sprites.remove(sprite2);
 									sprite.vspeed*=-1;
 								}
-								if(sprite2.id==sprite.GOOMBA){
+								if(sprite2.id==Sprite.GOOMBA){
 									sprites.remove(sprite2);
 								}
-								if(sprite2.id==sprite.MUSHROOM){
-									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,sprite.SUPER_MARIO));
+								if(sprite2.id==Sprite.MUSHROOM){
+									sprites.add(new Sprite(sprite.x,sprite.y,stageX,stageY,Sprite.SUPER_MARIO));
 									sprites.remove(sprite);
 								}
-								if(sprite2.id==sprite.QUESTION_BLOCK){
+								if(sprite2.id==Sprite.QUESTION_BLOCK){
 									if(sprite.vspeed<0){
-										sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,sprite.BLOCK));
-										sprites.add(new Sprite(sprite2.x,sprite2.y-sprite2.width,stageX,stageY,sprite.MUSHROOM));
+										sprites.add(new Sprite(sprite2.x,sprite2.y,stageX,stageY,Sprite.BLOCK));
+										sprites.add(new Sprite(sprite2.x,sprite2.y-sprite2.width,stageX,stageY,Sprite.MUSHROOM));
 										sprites.remove(sprite2);
 									}
 								}

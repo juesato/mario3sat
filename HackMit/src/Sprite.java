@@ -24,10 +24,10 @@ public class Sprite {
 	public static final int SUPER_MARIO=8;
 	public static final int CROUCH_MARIO=9;
 	
-	public final int SHELL_SPEED=12;
-	public final double gravity=4/stageY;
+	public static final int SHELL_SPEED=12;
+	public static final double gravity=256;
 	
-	public String[] sup = {"Mario", "Koopa", "Koopa shell", "Gumba", "Mushroom", "Question block",
+	public String[] sup = {"Mario", "Koopa", "Koopa shell", "Goomba", "Mushroom", "Question block",
       "Brick", "Block", "Super mario","Crouch Mario"};
 
   	
@@ -56,6 +56,8 @@ public class Sprite {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		width=im.getWidth();
+		height=im.getHeight();
 	}
 	
 	public Sprite(int stageXIn,int stageYIn, int idin){
@@ -84,11 +86,11 @@ public class Sprite {
 	}
 	
 	public boolean checkVertCollide(Sprite in){
-		int leftY = getPixelY();
-		int rightY = leftY+width-1;
-		int otherLeftY = in.getPixelY();
-		int otherRightY = otherLeftY+in.width-1;
-		return (leftY>=otherLeftY && leftY <= otherRightY) || (rightY >= otherLeftY && rightY <= otherRightY);
+		int topY = getPixelY();
+		int botY = topY+height-1;
+		int otherTopY = in.getPixelY();
+		int otherBotY = otherTopY+in.width-1;
+		return (topY>=otherTopY && topY <= otherBotY) || (botY >= otherTopY && botY <= otherBotY);
 	}
 	
 	public int getPixelX(){
@@ -107,7 +109,7 @@ public class Sprite {
 	public void draw(Graphics g, int winX, int winY, int winWidth, int winHeight){
 		int pixelX = getPixelX();
 		int pixelY = getPixelY();
-		System.out.println("X is: " + pixelX + " and Y is: " + pixelY);
+//		System.out.println("X is: " + pixelX + " and Y is: " + pixelY);
 		if(pixelX+width>=winX && pixelY+height>=winY && pixelX<=winX+winWidth && pixelY<=winY+winHeight){
 			g.drawImage(im, pixelX-winX, pixelY-winY, null);
 		}
