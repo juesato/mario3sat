@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class Gadget {
   private static final int SIDE = 20;
   private static final int PIXELS = 32;
-  private static final int DUDES = 5;
+  private static final int DUDES = 1;
 
   private int[][] grid = new int[SIDE][SIDE];
-  private ArrayList<Sprite> dudes;
+  private ArrayList<Sprite> dudes = new ArrayList<Sprite>();
 
   private String[][] maps = { {}, {},
       {
@@ -56,8 +56,9 @@ public class Gadget {
       for (int j = 0; j < SIDE; j++) {
         if (grid[i][j] != -1) {
           Sprite dude = new Sprite(SIDE * PIXELS * DUDES, SIDE * PIXELS * DUDES, grid[i][j]);
-          dude.setGridX(i);
-          dude.setGridY(j);
+          dude.setX(i * PIXELS);
+          dude.setY(j * PIXELS);
+          dudes.add(dude);
         }
       }
     }
