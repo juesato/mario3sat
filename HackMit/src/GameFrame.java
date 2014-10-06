@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
     winHeight = 32 * 22;
     setSize(winWidth, winHeight);
 
-    stageX = 32 * 40;
+    stageX = 32 * 40; // What the hell do these numbers mean I don't know
     stageY = 32 * 40;
 
     winX = 0;
@@ -47,14 +47,23 @@ public class GameFrame extends JFrame {
     sprites = gadget.getSprites();
     
 //    MapGrid m = new MapGrid(Main.shittyGetter());
-//    System.out.println("THIS IS HOW MANY SPRITES THERE ARE");
-//    System.out.println(m.allSprites().size());
+//    System.out.println("THERE ARE " + m.allSprites().size() + " SPRITES");
 //    sprites = m.allSprites();
 
     sprites.add(new Sprite(2 * 32.0 / stageX, 36 * 32.0 / stageY, stageX, stageY,
         Sprite.QUESTION_BLOCK));
 
-    mario = new Sprite(100.0 / stageX, 100.0 / stageY, stageX, stageY, Sprite.MARIO);
+    mario = new Sprite(stageX, stageY, Sprite.MARIO);
+    System.out.println(100.0 / stageX + " " + 100 / stageY);
+//    mario.setX((int) (100.0 / stageX));
+//    mario.setY((int) (100.0 / stageY));
+    mario.setX(100); // Why does this not change where mario falls down?
+    mario.setY(1);
+    
+    Sprite blockBelowMario = new Sprite(100.0 / stageX, 100.0 / stageY - .4, stageX, stageY, Sprite.BLOCK);
+    Sprite a = new Sprite(100.0 / stageX, 100.0 / stageY + .4, stageX, stageY, Sprite.BLOCK);
+
+//    mario = new Sprite();
     sprites.add(mario);
     movingSprites.add(mario);
 

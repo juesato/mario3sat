@@ -42,7 +42,13 @@ public class Sprite {
 		update();
 	}
 	
-	public Sprite(int stageXIn,int stageYIn, int idin){
+	public Sprite(int stageXIn,int stageYIn, int idin){ 
+		/*
+			So I have no clue who wrote this constructor but stageX and stageY are stage attributes, not sprite attributes
+			They're the same for every sprite.
+			
+			ALSO, X and Y are actually the opposite of what they should mean. Increasing y moves Mario to the right.
+		*/
 		this(idin);
 		this.stageX=stageXIn;
 		this.stageY=stageYIn;

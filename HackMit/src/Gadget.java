@@ -349,7 +349,7 @@ public class Gadget {
     for (int i = 0; i < SIDE; i++) {
       for (int j = 0; j < SIDE; j++) {
         if (grid[i][j] != -1) {
-          Sprite dude = new Sprite(SIDE * PIXELS * rows, SIDE * PIXELS * cols, grid[i][j]);
+          Sprite dude = new Sprite(SIDE * PIXELS * rows, SIDE * PIXELS * cols, grid[i][j]); 
           dude.setX(j * PIXELS + c * SIDE * PIXELS);
           dude.setY(i * PIXELS + r * SIDE * PIXELS);
           dudes.add(dude);

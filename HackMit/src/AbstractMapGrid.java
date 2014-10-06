@@ -23,6 +23,7 @@ public class AbstractMapGrid {
 	  
 	  public static final int EMPTY = 123;
 	  
+	  public static final int START = 70;
 	  public static final int FINISH = 80;
 	  
 	  public static final int BIG_NUMBER = 10;
@@ -104,8 +105,11 @@ public class AbstractMapGrid {
 	      
 	      int cur_x = var_col;
 	      for (int i = 0; i < v; i++) {
+	    	  
 	          tempGrid[var_row][cur_x] = smartAdd(tempGrid[var_row][cur_x], VARIABLE[0]);
-	          
+	          if (i == 0) { // The first variable should be the start variable
+	        	  tempGrid[var_row][cur_x] = START;
+	          }
 
 	          /*                 
 	           *             VARIABLE

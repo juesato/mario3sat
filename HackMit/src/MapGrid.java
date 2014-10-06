@@ -22,6 +22,7 @@ public class MapGrid {
 				int id = cur.get(c);
 				if (gadgetIdToName.containsKey(id)) {
 					Gadget g = new Gadget(gadgetIdToName.get(id), gadgetIdToFlip.get(id), rows, cols, r, c);
+					System.out.println("POSITION R C " + r + " " + c + " OF TYPE " + gadgetIdToName.get(id) + ": HAS " + g.getSprites().size() + " SPRITES");
 					for (Sprite s : g.getSprites()) {
 						sprites.add(s);						
 					}
@@ -40,14 +41,14 @@ public class MapGrid {
 		gadgetIdToName.put(22, "VARIABLE_L");
 		gadgetIdToFlip.put(22,  true);
 		
-		gadgetIdToName.put(50, "PATH_UD");
-		gadgetIdToFlip.put(50,  false);
-		gadgetIdToName.put(51, "PATH_UD");
-		gadgetIdToFlip.put(51,  false);
-		gadgetIdToName.put(52, "PATH_RL");
-		gadgetIdToFlip.put(52,  false);
-		gadgetIdToName.put(53, "PATH_RL");
-		gadgetIdToFlip.put(53,  false);
+//		gadgetIdToName.put(50, "PATH_UD");
+//		gadgetIdToFlip.put(50,  false);
+//		gadgetIdToName.put(51, "PATH_UD");
+//		gadgetIdToFlip.put(51,  false);
+//		gadgetIdToName.put(52, "PATH_RL");
+//		gadgetIdToFlip.put(52,  false);
+//		gadgetIdToName.put(53, "PATH_RL");
+//		gadgetIdToFlip.put(53,  false);
 		gadgetIdToName.put(54, "PATH_DROP");
 		gadgetIdToFlip.put(54,  false);	
 		
@@ -74,8 +75,8 @@ public class MapGrid {
 		gadgetIdToName.put(13, "CROSSOVER_DL");
 		gadgetIdToFlip.put(13, true);
 		
-		gadgetIdToName.put(123, "EMPTY");
-		gadgetIdToFlip.put(123, false);
+//		gadgetIdToName.put(123, "EMPTY");
+//		gadgetIdToFlip.put(123, false);
 		
 		gadgetIdToName.put(80, "EMPTY"); // "FINISH"
 		gadgetIdToFlip.put(80, false);
