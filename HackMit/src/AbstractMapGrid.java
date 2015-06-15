@@ -271,11 +271,12 @@ public class AbstractMapGrid {
 	      tempGrid[clause_row+1][clause_col + 6*clauseList.size()] = FINISH;
 	      
 	      for (int i = 0; i < rows; i++) {
+	    	System.out.print("[");
 	      	for (int j = 0; j < cols; j++) {
 	      		System.out.print(tempGrid[i][j]);
-	      		System.out.print(",");
+	      		if (j != cols - 1) System.out.print(",");
 	      	}
-	      	System.out.print("\n");
+	      	System.out.print("],\n");
 	      }
 	      
 	      ArrayList<ArrayList<Integer>> ans = new ArrayList<>();

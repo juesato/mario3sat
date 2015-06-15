@@ -151,7 +151,7 @@ public class GameFrame extends JFrame {
           for (Sprite sprite2 : (ArrayList<Sprite>) sprites.clone()) {
             if (sprite2 == sprite) continue;
             if (sprite.checkHorCollide(sprite2) && sprite.checkVertCollide(sprite2)) {
-              System.out.println("hor collision between " + sprite + " and " + sprite2);
+//              System.out.println("hor collision between " + sprite + " and " + sprite2);
               if (sprite.id == Sprite.KOOPA_SHELL) {
                 if (sprite2.id == Sprite.BRICK) {
                   sprites.remove(sprite2);

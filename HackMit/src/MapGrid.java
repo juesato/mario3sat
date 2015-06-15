@@ -72,7 +72,7 @@ public class MapGrid {
 		gadgetIdToFlip.put(11, true);
 		gadgetIdToName.put(12, "CROSSOVER_DR");
 		gadgetIdToFlip.put(12, false);		
-		gadgetIdToName.put(13, "CROSSOVER_DL");
+		gadgetIdToName.put(13, "CROSSOVER_DL"); // pretty sure this should actually be DR not DL
 		gadgetIdToFlip.put(13, true);
 		
 //		gadgetIdToName.put(123, "EMPTY");

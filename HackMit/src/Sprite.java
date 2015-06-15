@@ -108,16 +108,16 @@ public class Sprite {
 	public void update(){
 		File imf;
 		switch(id){
-		case KOOPA: imf=new File("koopa_red.gif"); break;
-		case KOOPA_SHELL: imf=new File("koopa_shell_red.gif"); break;
-		case GOOMBA: imf=new File("goomba.jpg"); break;
-		case MUSHROOM: imf=new File("mushroom.png"); break;
-		case QUESTION_BLOCK: imf=new File("mystery_box.gif"); break;
-		case BRICK: imf=new File("brick.png"); break;
-		case BLOCK: imf=new File("empty_block.gif"); break;
-		case SUPER_MARIO: imf=new File("mario_large.gif"); break;
-		case CROUCH_MARIO: imf=new File("mario_crouch.gif"); break;
-		default: imf=new File("mario_small.gif"); break;
+		case KOOPA: imf=new File("res/koopa_red.gif"); break;
+		case KOOPA_SHELL: imf=new File("res/koopa_shell_red.gif"); break;
+		case GOOMBA: imf=new File("res/goomba.jpg"); break;
+		case MUSHROOM: imf=new File("res/mushroom.png"); break;
+		case QUESTION_BLOCK: imf=new File("res/mystery_box.gif"); break;
+		case BRICK: imf=new File("res/brick.png"); break;
+		case BLOCK: imf=new File("res/empty_block.gif"); break;
+		case SUPER_MARIO: imf=new File("res/mario_large.gif"); break;
+		case CROUCH_MARIO: imf=new File("res/mario_crouch.gif"); break;
+		default: imf=new File("res/mario_small.gif"); break;
 		}
 		try {
 			im=ImageIO.read(imf);

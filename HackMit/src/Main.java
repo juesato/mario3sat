@@ -100,11 +100,25 @@ public class Main extends JApplet implements ActionListener {
   
   public void actionPerformed(ActionEvent e)
   {
+	System.out.println("actionPerformed");
+    satInput = input.getText();
+    parse(satInput);
+    
+    grid = AbstractMapGrid.getSymbolicGrid(clauses, numVars);
+    System.out.println("cmon");
+    System.out.println("Your Mom" + grid.size());
+    if (isGood(clauses)) {
+      System.out.println("YEEEEEEAH");
+    } else {
+      System.out.println("You dun fucked up");
+    }
+    
     if (e.getSource() == input) {
       satInput = input.getText();
       parse(satInput);
       
       grid = AbstractMapGrid.getSymbolicGrid(clauses, numVars);
+      System.out.println("cmon");
       System.out.println("Your Mom" + grid.size());
       if (isGood(clauses)) {
         System.out.println("YEEEEEEAH");
@@ -127,6 +141,7 @@ public class Main extends JApplet implements ActionListener {
        */
     }
     else if (e.getSource() == render) {
+      System.out.println("render");
       @SuppressWarnings("unused")
       GameFrame f = new GameFrame();
     }
