@@ -6844,7 +6844,8 @@ var FullScreenMario = (function(GameStartr) {
         EightBitter.AudioPlayer.playTheme();
         
         EightBitter.QuadsKeeper.resetQuadrants();
-        
+        console.log("location.entry");
+        console.log(location);
         location.entry(EightBitter, location);
         
         EightBitter.ModAttacher.fireEvent("onSetLocation", location);
@@ -6865,6 +6866,7 @@ var FullScreenMario = (function(GameStartr) {
      *                                default, not used).
      */
     function mapEntranceNormal(EightBitter, location) {
+
         console.log("mapEntranceNormal");
         if (location && location.xloc) {
            EightBitter.scrollWindow(location.xloc * EightBitter.unitsize);
@@ -6886,6 +6888,7 @@ var FullScreenMario = (function(GameStartr) {
      *                                default, not used).
      */
     function mapEntrancePlain(EightBitter, location) {
+    console.log("mapEntrancePlain");
        if (location && location.xloc) {
            EightBitter.scrollWindow(location.xloc * EightBitter.unitsize);
        }
@@ -6908,6 +6911,7 @@ var FullScreenMario = (function(GameStartr) {
      *                                default, not used).
      */
     function mapEntranceWalking(EightBitter, location) {
+        console.log("mapEntranceWalking");
        EightBitter.mapEntrancePlain(EightBitter, location);
        
        EightBitter.player.keys.run = 1;
@@ -6922,8 +6926,13 @@ var FullScreenMario = (function(GameStartr) {
      * added at 2 x 56.
      * 
      * @param {EightBittr} EightBitter
+     * @param {Location} [location]   The calling Location entering into (by
+     *                                default, not used). -jon     
      */
-    function mapEntranceCastle(EightBitter) {
+    function mapEntranceCastle(EightBitter, location) {
+        console.log("mapEntranceCastle");
+        console.log(location);
+
         EightBitter.addPlayer(
             EightBitter.unitsize * 2,
             EightBitter.unitsize * 56
@@ -7049,6 +7058,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {EightBittr} EightBitter
      */
     function mapEntranceRespawn(EightBitter) {
+        console.log("mapEntranceRespawn");
         EightBitter.MapScreener.nokeys = false;
         EightBitter.MapScreener.notime = false;
         EightBitter.MapScreener.canscroll = true;

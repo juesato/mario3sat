@@ -28,7 +28,8 @@ var sampleGadgetMap =
 [0,61,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,52,65,65]]
 
 var gadgetDescriptions = [
-  ["7777777......7777777",
+  [
+      "7777777......7777777",
       "7.....7......7.....7",
       "7.....7......7.....7",
       "7.....7......7.....7",
@@ -47,7 +48,8 @@ var gadgetDescriptions = [
       "7..............7...7",
       "7..............7...7",
       "7..............7...7",
-      "7..............77777"],
+      "7..............77777"
+  ],
   [   "7777777......7777777",
       "7777777......7777777",
       "7.....7.........7..7",
@@ -342,11 +344,33 @@ var gadgetDescriptions = [
     "7..................7",
     "7..................7",
     "77777777777777777777"
-  ]
+  ],
+  [
+      "7777777......7777777",
+      "7.....7......7.....7",
+      "7.....7......7.....7",
+      "7.....7...5..7.....7",
+      "7.....7......7.....7",
+      "7.....7......7.....7",
+      "7777777......7777777",
+      "7...................",
+      "777777777777777777..",
+      "7...................",
+      "7..............77777",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............7...7",
+      "7..............77777"
+  ],
 ];
 
 var gadgetNames = ["VARIABLE_L", "CROSSOVER_DR", "CROSSOVER_UR", "PATH_UD", "PATH_RL", "PATH_DROP", "ELBOW_UL",
-  "ELBOW_DL", "ELBOW_T", "ELBOW_T_INV", "CLAUSE_A", "CLAUSE_B", "CLAUSE_C", "CLAUSE_D", "EMPTY"];
+  "ELBOW_DL", "ELBOW_T", "ELBOW_T_INV", "CLAUSE_A", "CLAUSE_B", "CLAUSE_C", "CLAUSE_D", "EMPTY", "START"];
 
 var gadgetIdToName = {
 	21 : "VARIABLE_L",
@@ -387,6 +411,7 @@ var gadgetIdToName = {
   42 : "CLAUSE_D",
 
   0  : "EMPTY",
+  70 : "START",
 	80 : "EMPTY" // TODO: this should be FINISH
 }
 
@@ -432,6 +457,7 @@ var gadgetIdToFlip = {
   42 : false,
 
   0  : false,
+  70 : false,
 	80 : false
 }
 
@@ -442,8 +468,16 @@ for (var key in gadgetIdToFlip) {
 
 // Question Block holds Mushroom
 // 
-spriteCodeToName = ["Mario-Unused", "Koopa", "Koopa shell-Unused", "Goomba", "Mushroom", "QuestionBlock",
-      "Brick", "Stone", "Super mario","Crouch Mario"];
+spriteCodeToName = {
+  0: "Mario-Unused", 
+  1: "Koopa", 
+  2: "Koopa shell-Unused", 
+  3: "Goomba", 
+  4: "Mushroom", 
+  5: "QuestionBlock",
+  6: "Brick", 
+  7: "Stone", 
+};
 // TODO:
 // Make Super Mario and Crouch Mario occur properly
 // TODO: Make Question blocks work
@@ -453,7 +487,7 @@ spriteCodeToName = ["Mario-Unused", "Koopa", "Koopa shell-Unused", "Goomba", "Mu
 // var GADGET_ROWS = 20;
 // var GADGET_COLS = 20;
 var GADGET_SIDE_LEN = 20;
-var BLOCK_SIDE_LEN = 4;
+var BLOCK_SIDE_LEN = 6;
 
 function getOutputObject(name) {
   output = {}
@@ -499,6 +533,7 @@ function macroGadget(reference, prethings, area, map, scope) {
 
 function readGadgetMap(gadgetMap) {
   var creationCmds = [];
+  var start_pos = {};
   for (var i = 0; i < gadgetMap.length; i++) {
     var y = gadgetMap.length - i - 1;
     for (var x = 0; x < gadgetMap[0].length; x++) {
@@ -519,6 +554,11 @@ function readGadgetMap(gadgetMap) {
       var name = gadgetIdToName[gadgetCode];
       // console.log("Name " + name);
       // console.log("Gadget name is " + name + " Id " + gadgetCode);
+      if (name == "START") {
+        start_pos.x = x;
+        start_pos.y = y;
+      }
+
       var cmd = {
         "macro": "Gadget",
         "gadget": name,
