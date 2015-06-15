@@ -452,7 +452,8 @@ var MapsCreatr = (function () {
             // console.log(settings.maps);
             this.storeMaps(settings.maps);
         }
-        this.storeMap("my_map", my_map);
+        // Slows down the loading a ton.
+        // this.storeMap("my_map", my_map);
     }
     /* Simple gets
     */
