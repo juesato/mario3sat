@@ -1083,12 +1083,15 @@ var FullScreenMario = (function(GameStartr) {
             //     return;
             // }
             // console.log("bottom" + EightBitter.MapScreener.bottom + "top" + EightBitter.MapScreener.top);
-            var BUFFER_TOP = 150; // I'd rather not kill people by accident
-            if (EightBitter.MapScreener.top > (EightBitter.MapScreener.height + BUFFER_TOP) || 
-                EightBitter.MapScreener.bottom < -BUFFER_TOP) {
-                console.log("Player moved off of screen");
-                EightBitter.killPlayer(player, 2);
-            }
+            var BUFFER_TOP = 200; // I'd rather not kill people by accident
+            console.log(EightBitter.MapScreener.top + " top height " + EightBitter.MapScreener.height);
+            // if (EightBitter.MapScreener.top > (EightBitter.MapScreener.height + BUFFER_TOP) || 
+                // EightBitter.MapScreener.bottom < -BUFFER_TOP) {
+            // if (EightBitter.MapScreener.bottom > BUFFER_TOP) {
+            //     console.log("Player moved off of screen");
+            //     console.log(EightBitter.MapScreener.bottom);
+            //     EightBitter.killPlayer(player, 2);
+            // }
         }
 
         // Player is moving to the right
@@ -6917,7 +6920,11 @@ var FullScreenMario = (function(GameStartr) {
             // EightBitter.scrollWindow(location.xloc *EightBitter.unitsize, 
             // location.yloc * EightBitter.unitsize);
             console.log("do it");
-            EightBitter.scrollWindow(180 * EightBitter.unitsize, 0);
+            EightBitter.scrollWindow(
+                location.xloc * EightBitter.unitsize, 
+                -location.yloc * EightBitter.unitsize
+                // 0
+            );
        }
        
        EightBitter.addPlayer(
