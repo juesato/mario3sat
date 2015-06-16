@@ -1,0 +1,44 @@
+{
+    "name": "New Map",
+    "locations": [{
+        "entry": "Plain"
+    }],
+    "areas": [{
+        "setting": "Overworld",
+        "creation": [{
+            "macro": "Floor",
+            "x": 0,
+            "y": 0,
+            "width": 128
+        }, {
+            "thing": "Mushroom",
+            "x": 28,
+            "y": 8
+        }, {
+            "thing": "Brick",
+            "x": 48,
+            "y": 16,
+            "contents": ""
+        }, {
+            "thing": "Brick",
+            "x": 56,
+            "y": 16,
+            "contents": ""
+        }, {
+            "thing": "Brick",
+            "x": 64,
+            "y": 16,
+            "contents": ""
+        }, {
+            "thing": "Brick",
+            "x": 72,
+            "y": 16,
+            "contents": ""
+        }, {
+            "thing": "Brick",
+            "x": 80,
+            "y": 16,
+            "contents": ""
+        }]
+    }]
+}

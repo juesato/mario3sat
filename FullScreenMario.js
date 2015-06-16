@@ -912,6 +912,8 @@ var FullScreenMario = (function(GameStartr) {
      * 
      * @param {Thing} thing
      */
+
+
     function maintainOverlaps(thing) {
         // If checkOverlaps is still true, we are in the first maintain call
 
@@ -920,7 +922,16 @@ var FullScreenMario = (function(GameStartr) {
                 return;
             }
         }
-        
+
+        // Don't let player jump through walls. Override all keys to 0 except for run, so game doesn't freeze. Hack.
+        thing.keys.crouch = 0;
+        thing.keys.jumplev = 0;
+        thing.keys.sprint = 0;
+        thing.keys.rightDown = 0;
+        thing.keys.up = 0;
+        thing.keys.down = 0;
+        thing.keys.leftDown = 0;
+
         thing.EightBitter.slideToX(
             thing, 
             thing.overlapGoal, 
@@ -928,11 +939,13 @@ var FullScreenMario = (function(GameStartr) {
         );
         
         var mapOffsetX = thing.EightBitter.MapScreener.left;
-
+        // if (thing.EightBitter.isSolidOnCharacter(other, thing)) {
+        //     console.log("maintainOverlap solidOnChar");
+        // }
         // Goal to the right: has the thing gone far enough to the right?
         if (thing.overlapGoRight) {
             if (thing.left + mapOffsetX >= thing.overlapCheck) {
-                console.log("weird");
+                // console.log("weird");
                 thing.EightBitter.setLeft(thing, thing.overlapCheck - mapOffsetX);
             } else {
                 return;
@@ -941,7 +954,7 @@ var FullScreenMario = (function(GameStartr) {
         // Goal to the left: has the thing gone far enough to the left?
         else {
             if (thing.right + mapOffsetX <= thing.overlapCheck) {
-                console.log("made it here");
+                // console.log("made it here");
                 thing.EightBitter.setRight(thing, thing.overlapCheck - mapOffsetX);
             } else {
                 return;
@@ -951,6 +964,7 @@ var FullScreenMario = (function(GameStartr) {
         // A check above didn't fail into a return, so overlapping is solved
         thing.overlaps.length = 0;
         thing.checkOverlaps = true;
+        thing.disableMovement = false;
     }
     
     /**
@@ -1047,6 +1061,7 @@ var FullScreenMario = (function(GameStartr) {
                     player.jumping = true;
                 }
             }
+
             // Player has fallen too far
             // if (!player.dying && player.top > EightBitter.MapScreener.bottom) {
             //     console.log("Player has fallen too far");
@@ -2900,6 +2915,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Solid} other
      */
     function collideCharacterSolid(thing, other) {
+        console.log("collideCharacterSolid");
         if (other.up === thing) {
             return;
         }
@@ -2922,6 +2938,7 @@ var FullScreenMario = (function(GameStartr) {
         }
         // Solid on top of character
         else if (thing.EightBitter.isSolidOnCharacter(other, thing)) {
+            console.log("solidOnTop");
             var midx = thing.EightBitter.getMidX(thing);
             
             if (midx > other.left && midx < other.right) {
@@ -4759,6 +4776,11 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Player} thing
      */
     function movePlayer(thing) {
+        // if (thing.disableJump) {
+        //     console.log("disableMovement");
+        //     return;
+        // }
+
         // Not jumping
         if (!thing.keys.up) {
             thing.keys.jump = 0;
