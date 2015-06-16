@@ -2915,7 +2915,6 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Solid} other
      */
     function collideCharacterSolid(thing, other) {
-        console.log("collideCharacterSolid");
         if (other.up === thing) {
             return;
         }
@@ -2938,7 +2937,6 @@ var FullScreenMario = (function(GameStartr) {
         }
         // Solid on top of character
         else if (thing.EightBitter.isSolidOnCharacter(other, thing)) {
-            console.log("solidOnTop");
             var midx = thing.EightBitter.getMidX(thing);
             
             if (midx > other.left && midx < other.right) {
@@ -6915,12 +6913,16 @@ var FullScreenMario = (function(GameStartr) {
 
         console.log("mapEntranceNormal");
         if (location && location.xloc) {
-           EightBitter.scrollWindow(location.xloc * EightBitter.unitsize);
+            // console.log("scrollWindow x "+ location.xloc + " y " + location.yloc);
+            // EightBitter.scrollWindow(location.xloc *EightBitter.unitsize, 
+            // location.yloc * EightBitter.unitsize);
+            console.log("do it");
+            EightBitter.scrollWindow(180 * EightBitter.unitsize, 0);
        }
        
        EightBitter.addPlayer(
-           EightBitter.unitsize * 16,
-           EightBitter.unitsize * 16
+            EightBitter.unitsize * 16,
+            EightBitter.unitsize * 16
        );
     }
     
