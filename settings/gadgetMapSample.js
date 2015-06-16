@@ -504,12 +504,16 @@ function getOutputObject(name) {
 }
 
 function macroGadget(reference, prethings, area, map, scope) {
+  console.log("macroGadget");
   var gadgetName = reference.gadget;
   var idx = gadgetNames.indexOf(gadgetName);
-  var gadgetDesc = gadgetDescriptions[idx];
+  var tmpGadgetDesc = gadgetDescriptions[idx];
 
   if (reference.reflect) {
-    gadgetDesc = reflect(gadgetDesc);
+    var gadgetDesc = reflect(tmpGadgetDesc);
+  }
+  else {
+    var gadgetDesc = tmpGadgetDesc;
   }
 
   // console.log("Index: " + idx);
@@ -536,8 +540,8 @@ function readGadgetMap(gadgetMap) {
   var creationCmds = [];
   var start_pos = {};
   for (var i = 0; i < gadgetMap.length; i++) {
-    var y = i;
-    // var y = gadgetMap.length - i - 1;
+    // var y = i;
+    var y = gadgetMap.length - i - 1;
     for (var x = 0; x < gadgetMap[0].length; x++) {
       var gadgetCode = gadgetMap[i][x];
       if (gadgetCode == 123) {
@@ -593,14 +597,14 @@ function readGadgetMap(gadgetMap) {
 
 
 function reflect(grid) {
-  for (var i = 0; i < GADGET_SIDE_LEN; i++) {
-    for (var j = 0; j < GADGET_SIDE_LEN / 2; j++) {
-      var temp = grid[i][j];
-      grid[i][j] = grid[i][GADGET_SIDE_LEN - j - 1];
-      grid[i][GADGET_SIDE_LEN - j - 1] = temp;
-    }
+  var reflected = [];
+  function reverse(s) {
+    return s.split('').reverse().join('');
   }
-  return grid
+  for (var i = 0; i < GADGET_SIDE_LEN; i++) {
+    reflected.push(reverse(grid[i]));
+  }
+  return reflected;
 }
 
 
