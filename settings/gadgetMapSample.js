@@ -487,7 +487,7 @@ spriteCodeToName = {
 // var GADGET_ROWS = 20;
 // var GADGET_COLS = 20;
 var GADGET_SIDE_LEN = 20;
-var BLOCK_SIDE_LEN = 6;
+var BLOCK_SIDE_LEN = 8;
 
 function getOutputObject(name) {
   output = {}
@@ -515,12 +515,13 @@ function macroGadget(reference, prethings, area, map, scope) {
   // console.log("Index: " + idx);
   // console.log(gadgetName);
   var outputs = [];
-  for (var dy = 0; dy < gadgetDesc.length; dy++) {
+  for (var i = 0; i < gadgetDesc.length; i++) {
+    var dy = gadgetDesc.length - i - 1; // Don't make gadgets upsides-down!
     for (var dx = 0; dx < gadgetDesc[0].length; dx++) {
 
-      if (gadgetDesc[dy].charAt(dx) == '.') 
+      if (gadgetDesc[i].charAt(dx) == '.') 
         continue;
-      var code = gadgetDesc[dy][dx] - '0';
+      var code = gadgetDesc[i][dx] - '0';
       var output = getOutputObject(spriteCodeToName[code]);
       output.x = reference.x + BLOCK_SIDE_LEN*dx;
       output.y = reference.y + BLOCK_SIDE_LEN*dy;
@@ -535,14 +536,15 @@ function readGadgetMap(gadgetMap) {
   var creationCmds = [];
   var start_pos = {};
   for (var i = 0; i < gadgetMap.length; i++) {
-    var y = gadgetMap.length - i - 1;
+    var y = i;
+    // var y = gadgetMap.length - i - 1;
     for (var x = 0; x < gadgetMap[0].length; x++) {
       var gadgetCode = gadgetMap[i][x];
       if (gadgetCode == 123) {
         // This is a blank square
         continue;
       }
-      if (gadgetCode == 70 || gadgetCode == 80) {
+      if (gadgetCode == 80) {
         // TODO: Implement start and finish
         continue;
       }
@@ -555,6 +557,7 @@ function readGadgetMap(gadgetMap) {
       // console.log("Name " + name);
       // console.log("Gadget name is " + name + " Id " + gadgetCode);
       if (name == "START") {
+        console.log("found START");
         start_pos.x = x;
         start_pos.y = y;
       }
@@ -574,14 +577,16 @@ function readGadgetMap(gadgetMap) {
   var new_map = {
     "name" : "3sat",
     "locations" : [
-      { "entry": "Castle"}
+      {"xloc": (start_pos.x + .5) * GADGET_SIDE_LEN * BLOCK_SIDE_LEN, 
+       "yloc": (start_pos.y + .5) * GADGET_SIDE_LEN * BLOCK_SIDE_LEN}
+      // { "entry": "Castle"}
     ],
     "areas": [  
       {
         "setting": "Castle",
         "creation": creationCmds
       }
-    ]
+    ],
   };
   return new_map;
 }
@@ -602,7 +607,7 @@ function reflect(grid) {
 var my_map = readGadgetMap(sampleGadgetMap);
 var str = JSON.stringify(my_map, null, 2);
 
-// console.log(str);
+console.log(str);
 
 
 

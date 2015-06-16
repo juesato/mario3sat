@@ -442,7 +442,7 @@ var FullScreenMario = (function(GameStartr) {
         console.log("Bot " + (bottom-player.height*EightBitter.unitsize));
 
         EightBitter.addThing(
-            player, left+200, -100+bottom - player.height * EightBitter.unitsize
+            player, left, bottom - player.height * EightBitter.unitsize
         );
         
         EightBitter.ModAttacher.fireEvent("onAddPlayer", player);
@@ -863,6 +863,7 @@ var FullScreenMario = (function(GameStartr) {
             
             // Overlaps
             if (character.overlaps && character.overlaps.length) {
+                // console.log("call Maintain");
                 EightBitter.maintainOverlaps(character);
             }
 
@@ -912,7 +913,8 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Thing} thing
      */
     function maintainOverlaps(thing) {
-        // If checkOverlaps is still true, this is the first maintain call
+        // If checkOverlaps is still true, we are in the first maintain call
+
         if (thing.checkOverlaps) {
             if (!thing.EightBitter.setOverlapBoundaries(thing)) {
                 return;
@@ -925,18 +927,22 @@ var FullScreenMario = (function(GameStartr) {
             thing.EightBitter.unitsize
         );
         
+        var mapOffsetX = thing.EightBitter.MapScreener.left;
+
         // Goal to the right: has the thing gone far enough to the right?
         if (thing.overlapGoRight) {
-            if (thing.left >= thing.overlapCheck) {
-                thing.EightBitter.setLeft(thing, thing.overlapCheck);
+            if (thing.left + mapOffsetX >= thing.overlapCheck) {
+                console.log("weird");
+                thing.EightBitter.setLeft(thing, thing.overlapCheck - mapOffsetX);
             } else {
                 return;
             }
         } 
         // Goal to the left: has the thing gone far enough to the left?
         else {
-            if (thing.right <= thing.overlapCheck) {
-                thing.EightBitter.setRight(thing, thing.overlapCheck);
+            if (thing.right + mapOffsetX <= thing.overlapCheck) {
+                console.log("made it here");
+                thing.EightBitter.setRight(thing, thing.overlapCheck - mapOffsetX);
             } else {
                 return;
             }
@@ -973,26 +979,33 @@ var FullScreenMario = (function(GameStartr) {
         
         for (i = 0; i < overlaps.length; i += 1) {
             other = overlaps[i];
-            
+
             if (other.right > rightX) {
                 rightThing = other;
+                rightX = rightThing.right;
             }
             if (other.left < leftX) {
                 leftThing = other;
+                leftX = leftThing.left;
             }
         }
         
-        midpoint = (leftX + rightX) / 2;
-        
+        midpoint = (leftX + rightX) / 2;     
+
+        console.log("setOverlapBoundaries");
         if (thing.EightBitter.getMidX(thing) >= midpoint) {
-            thing.overlapGoal = Infinity;
+            thing.overlapGoal = Infinity; // should be in global coordinates
             thing.overlapGoRight = true;
-            thing.overlapCheck = rightThing.right;
+            thing.overlapCheck = rightThing.right + thing.EightBitter.MapScreener.left;
+            console.log("RIGHT");
         } else {
             thing.overlapGoal = -Infinity;
             thing.overlapGoRight = false;
-            thing.overlapCheck = leftThing.left;
+            thing.overlapCheck = leftThing.left + thing.EightBitter.MapScreener.left;
+            console.log("LEFT");
+            console.log(thing.overlapCheck);
         }
+        console.log(thing.overlapCheck);
         
         thing.checkOverlaps = false;
         
@@ -1084,23 +1097,34 @@ var FullScreenMario = (function(GameStartr) {
         }
 
         // Scrolloffsetx is how far over the middle player's right is
-        var SCROLL_Y_MARGIN = 2.0;
+        var SCROLL_Y_MARGIN = 0.0; // anything greater than 0 makes this choppy. could come back to this later so it's not always scrolling.
+        var scrollspeedx = 0.0, scrollspeedy = 0.0;
+
         if (EightBitter.MapScreener.canscroll) {
             var scrolloffsetx = player.right - EightBitter.MapScreener.middleX;
-            if (scrolloffsetx > SCROLL_Y_MARGIN) {
+            if (Math.abs(scrolloffsetx) > SCROLL_Y_MARGIN) {
                 // console.log("scrolloffset>0");
+                scrollspeedx = Math.min(Math.abs(player.scrollspeed), Math.abs(scrolloffsetx))
+                if (scrolloffsetx < 0.0) {
+                    scrollspeedx *= -1;
+                }
+
                 EightBitter.scrollWindow(
-                    Math.round(Math.min(player.scrollspeed, scrolloffsetx))
+                    Math.round(scrollspeedx)
                 );
             }
         }
 
         // Equivalent for Scrolloffsety
         var scrolloffsety = player.top - EightBitter.MapScreener.middleY;
-        if (Math.abs(scrolloffsety) > 1) {
+        if (Math.abs(scrolloffsety) > SCROLL_Y_MARGIN) {
             // console.log("scrolloffsety>1");
+            scrollspeedy = Math.min(Math.abs(player.scrollspeed), Math.abs(scrolloffsety))
+            if (scrolloffsety < 0.0) {
+                scrollspeedy *= -1;
+            }
             EightBitter.scrollWindow(0,
-                Math.round(Math.min(player.scrollspeed, scrolloffsety))
+                Math.round(scrollspeedy)
             );
         }
     }
