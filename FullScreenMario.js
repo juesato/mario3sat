@@ -55,7 +55,6 @@
  */
 
 var DEBUG = true;
-console.log("FullScreenMario Loaded first");
 
 var FullScreenMario = (function(GameStartr) {
     "use strict";
@@ -85,7 +84,6 @@ var FullScreenMario = (function(GameStartr) {
      * @return {FullScreenMario}
      */
     function FullScreenMario(customs) {
-        console.log("When is this called");
         if (typeof customs === "undefined") {
             throw new Error("No arguments Object given to FullScreenMario.")
         }
@@ -277,8 +275,6 @@ var FullScreenMario = (function(GameStartr) {
     function gameStart() {
         var EightBitter = EightBittr.prototype.ensureCorrectCaller(this);
         
-        // console.log("Start");
-
         if (DEBUG) EightBitter.AudioPlayer.setMutedOn();
 
         EightBitter.setMap(
@@ -440,9 +436,6 @@ var FullScreenMario = (function(GameStartr) {
             bottom = EightBitter.unitsize * 16;
         }
         
-        console.log("Left " + left);
-        console.log("Bot " + (bottom-player.height*EightBitter.unitsize));
-
         EightBitter.addThing(
             player, left, bottom - player.height * EightBitter.unitsize
         );
@@ -460,7 +453,6 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Number} dy
      */
     function scrollPlayer(dx, dy) {
-        console.log("scrollPlayer");
         var EightBitter = EightBittr.prototype.ensureCorrectCaller(this);
         
         EightBitter.scrollThing(EightBitter.player, dx, dy);
@@ -865,7 +857,6 @@ var FullScreenMario = (function(GameStartr) {
             
             // Overlaps
             if (character.overlaps && character.overlaps.length) {
-                // console.log("call Maintain");
                 EightBitter.maintainOverlaps(character);
             }
 
@@ -941,9 +932,7 @@ var FullScreenMario = (function(GameStartr) {
         );
         
         var mapOffsetX = thing.EightBitter.MapScreener.left;
-        // if (thing.EightBitter.isSolidOnCharacter(other, thing)) {
-        //     console.log("maintainOverlap solidOnChar");
-        // }
+
         // Goal to the right: has the thing gone far enough to the right?
         if (thing.overlapGoRight) {
             if (thing.left + mapOffsetX >= thing.overlapCheck) {
@@ -956,7 +945,6 @@ var FullScreenMario = (function(GameStartr) {
         // Goal to the left: has the thing gone far enough to the left?
         else {
             if (thing.right + mapOffsetX <= thing.overlapCheck) {
-                // console.log("made it here");
                 thing.EightBitter.setRight(thing, thing.overlapCheck - mapOffsetX);
             } else {
                 return;
@@ -1008,20 +996,15 @@ var FullScreenMario = (function(GameStartr) {
         
         midpoint = (leftX + rightX) / 2;     
 
-        // console.log("setOverlapBoundaries");
         if (thing.EightBitter.getMidX(thing) >= midpoint) {
             thing.overlapGoal = Infinity; // should be in global coordinates
             thing.overlapGoRight = true;
             thing.overlapCheck = rightThing.right + thing.EightBitter.MapScreener.left;
-            // console.log("RIGHT");
         } else {
             thing.overlapGoal = -Infinity;
             thing.overlapGoRight = false;
             thing.overlapCheck = leftThing.left + thing.EightBitter.MapScreener.left;
-            // console.log("LEFT");
-            // console.log(thing.overlapCheck);
         }
-        // console.log(thing.overlapCheck);
         
         thing.checkOverlaps = false;
         
@@ -1038,8 +1021,6 @@ var FullScreenMario = (function(GameStartr) {
      */
     function maintainPlayer(EightBitter) {
         var player = EightBitter.player;
-        // console.log(player.top);
-        // console.log(EightBitter.MapScreener.bottom);
 
         if (!EightBitter.isThingAlive(player)) {
             return;
@@ -1084,6 +1065,7 @@ var FullScreenMario = (function(GameStartr) {
                 
             //     return;
             // }
+
             // console.log("bottom" + EightBitter.MapScreener.bottom + "top" + EightBitter.MapScreener.top);
             var BUFFER_TOP = 200; // I'd rather not kill people by accident
 
@@ -1126,7 +1108,6 @@ var FullScreenMario = (function(GameStartr) {
         if (EightBitter.MapScreener.canscroll) {
             var scrolloffsetx = player.right - EightBitter.MapScreener.middleX;
             if (Math.abs(scrolloffsetx) > SCROLL_Y_MARGIN) {
-                // console.log("scrolloffset>0");
                 scrollspeedx = Math.min(Math.abs(player.scrollspeed), Math.abs(scrolloffsetx))
                 if (scrolloffsetx < 0.0) {
                     scrollspeedx *= -1;
@@ -1141,7 +1122,6 @@ var FullScreenMario = (function(GameStartr) {
         // Equivalent for Scrolloffsety
         var scrolloffsety = player.top - EightBitter.MapScreener.middleY;
         if (Math.abs(scrolloffsety) > SCROLL_Y_MARGIN) {
-            // console.log("scrolloffsety>1");
             scrollspeedy = Math.min(Math.abs(player.scrollspeed), Math.abs(scrolloffsety))
             if (scrolloffsety < 0.0) {
                 scrollspeedy *= -1;
@@ -4782,10 +4762,6 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Player} thing
      */
     function movePlayer(thing) {
-        // if (thing.disableJump) {
-        //     console.log("disableMovement");
-        //     return;
-        // }
 
         // Not jumping
         if (!thing.keys.up) {
@@ -6896,8 +6872,6 @@ var FullScreenMario = (function(GameStartr) {
         EightBitter.AudioPlayer.playTheme();
         
         EightBitter.QuadsKeeper.resetQuadrants();
-        console.log("location.entry");
-        console.log(location);
         location.entry(EightBitter, location);
         
         EightBitter.ModAttacher.fireEvent("onSetLocation", location);
@@ -6922,8 +6896,7 @@ var FullScreenMario = (function(GameStartr) {
         console.log("mapEntranceNormal");
         if (location && location.xloc) {
             // console.log("scrollWindow x "+ location.xloc + " y " + location.yloc);
-            // EightBitter.scrollWindow(location.xloc *EightBitter.unitsize, 
-            // location.yloc * EightBitter.unitsize);
+
             console.log("do it");
             EightBitter.scrollWindow(
                 location.xloc * EightBitter.unitsize, 
@@ -6971,7 +6944,6 @@ var FullScreenMario = (function(GameStartr) {
      *                                default, not used).
      */
     function mapEntranceWalking(EightBitter, location) {
-        console.log("mapEntranceWalking");
        EightBitter.mapEntrancePlain(EightBitter, location);
        
        EightBitter.player.keys.run = 1;
@@ -6990,9 +6962,6 @@ var FullScreenMario = (function(GameStartr) {
      *                                default, not used). -jon     
      */
     function mapEntranceCastle(EightBitter, location) {
-        console.log("mapEntranceCastle");
-        console.log(location);
-
         EightBitter.addPlayer(
             EightBitter.unitsize * 2,
             EightBitter.unitsize * 56
@@ -7523,7 +7492,6 @@ var FullScreenMario = (function(GameStartr) {
      * @return {Object[]}
      */
     function macroPipe(reference, prethings, area, map, scope) {
-        console.log("made me a pipe");
         var x = reference.x || 0,
             y = reference.y || 0,
             height = reference.height || 16,
@@ -9039,7 +9007,5 @@ var FullScreenMario = (function(GameStartr) {
         "macroGadget": macroGadget
     });
     
-    console.log("Settings at end");
-    console.log(FullScreenMario.prototype.settings);
     return FullScreenMario;
 })(GameStartr);

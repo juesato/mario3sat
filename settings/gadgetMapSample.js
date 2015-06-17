@@ -504,8 +504,6 @@ function getOutputObject(name) {
 }
 
 function macroGadget(reference, prethings, area, map, scope) {
-  // console.log("macroGadget");
-  // console.log(arguments.callee.caller.name);
   var gadgetName = reference.gadget;
   var idx = gadgetNames.indexOf(gadgetName);
   var tmpGadgetDesc = gadgetDescriptions[idx];
@@ -517,8 +515,6 @@ function macroGadget(reference, prethings, area, map, scope) {
     var gadgetDesc = tmpGadgetDesc;
   }
 
-  // console.log("Index: " + idx);
-  // console.log(gadgetName);
   var outputs = [];
   for (var i = 0; i < gadgetDesc.length; i++) {
     var dy = gadgetDesc.length - i - 1; // Don't make gadgets upsides-down!
@@ -552,22 +548,17 @@ function readGadgetMap(gadgetMap) {
     var y = gadgetMap.length - i - 1;
     for (var x = 0; x < gadgetMap[0].length; x++) {
       var gadgetCode = gadgetMap[i][x];
-      if (gadgetCode == 123) {
-        // This is a blank square
+      if (gadgetCode == 123) // This is a blank square
         continue;
-      }
+
       if (gadgetCode == 80) {
-        // TODO: Implement start and finish
+        // TODO: Implement finish
         continue;
       }
-      // if (gadgetCode >= 30 && gadgetCode <= 42) {
-      //   // TODO: implement variables and clauses
-      //   continue;
-      // }
+
       var refl = gadgetIdToFlip[gadgetCode];
       var name = gadgetIdToName[gadgetCode];
-      // console.log("Name " + name);
-      // console.log("Gadget name is " + name + " Id " + gadgetCode);
+
       if (name == "START") {
         console.log("found START");
         start_pos.x = x;
