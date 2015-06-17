@@ -209,6 +209,7 @@ var FullScreenMario = (function(GameStartr) {
      *                          maps.js (settings/maps.js)
      */
     function resetMapsHandler(EightBitter, customs) {
+        console.log("resetMapsHandler");
         EightBitter.MapsHandler = new MapsHandlr({
             "MapsCreator": EightBitter.MapsCreator,
             "MapScreener": EightBitter.MapScreener,
@@ -361,6 +362,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {PreThing} prething
      */
     function addPreThing(prething) {
+        console.log("addPreThing spawns");
         var thing = prething.thing,
             position = prething.position || thing.position;
         
@@ -1006,20 +1008,20 @@ var FullScreenMario = (function(GameStartr) {
         
         midpoint = (leftX + rightX) / 2;     
 
-        console.log("setOverlapBoundaries");
+        // console.log("setOverlapBoundaries");
         if (thing.EightBitter.getMidX(thing) >= midpoint) {
             thing.overlapGoal = Infinity; // should be in global coordinates
             thing.overlapGoRight = true;
             thing.overlapCheck = rightThing.right + thing.EightBitter.MapScreener.left;
-            console.log("RIGHT");
+            // console.log("RIGHT");
         } else {
             thing.overlapGoal = -Infinity;
             thing.overlapGoRight = false;
             thing.overlapCheck = leftThing.left + thing.EightBitter.MapScreener.left;
-            console.log("LEFT");
-            console.log(thing.overlapCheck);
+            // console.log("LEFT");
+            // console.log(thing.overlapCheck);
         }
-        console.log(thing.overlapCheck);
+        // console.log(thing.overlapCheck);
         
         thing.checkOverlaps = false;
         
@@ -1084,7 +1086,10 @@ var FullScreenMario = (function(GameStartr) {
             // }
             // console.log("bottom" + EightBitter.MapScreener.bottom + "top" + EightBitter.MapScreener.top);
             var BUFFER_TOP = 200; // I'd rather not kill people by accident
-            console.log(EightBitter.MapScreener.top + " top height " + EightBitter.MapScreener.height);
+
+            // console.log(EightBitter.MapScreener.top + " top height " + EightBitter.MapScreener.height);
+
+
             // if (EightBitter.MapScreener.top > (EightBitter.MapScreener.height + BUFFER_TOP) || 
                 // EightBitter.MapScreener.bottom < -BUFFER_TOP) {
             // if (EightBitter.MapScreener.bottom > BUFFER_TOP) {
@@ -7313,6 +7318,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {PreThing} prething
      */
     function mapAddAfter(prething) {
+        console.log("mapAddAfter");
         var EightBitter = EightBittr.prototype.ensureCorrectCaller(this),
             MapsCreator = EightBitter.MapsCreator,
             MapsHandler = EightBitter.MapsHandler,

@@ -601,6 +601,11 @@ var MapsCreatr = (function () {
         for (i = 0; i < creation.length; i += 1) {
             this.analyzePreSwitch(creation[i], prethings, area, map);
         }
+        for (i = 0; i < prethings.length; i += 1) {
+            if (prethings[i].spawned) {
+                console.log(prethings.left + " " + prethings.bottom);
+            }
+        }
         return this.processPreThingsArrays(prethings);
     };
     /**
@@ -619,6 +624,7 @@ var MapsCreatr = (function () {
      */
     MapsCreatr.prototype.analyzePreSwitch = function (reference, prethings, area, map) {
         // Case: macro (unless it's undefined)
+        // console.log("mapsHandlr analyzePreSwitch");
         if (reference.macro) {
             return this.analyzePreMacro(reference, prethings, area, map);
         }
@@ -639,6 +645,7 @@ var MapsCreatr = (function () {
      * @param {Map} map   The Map object containing the Area object.
      */
     MapsCreatr.prototype.analyzePreMacro = function (reference, prethings, area, map) {
+        // console.log("analyzePreMacro");
         var macro = this.macros[reference.macro], outputs, i;
         if (!macro) {
             console.warn("A non-existent macro is referenced. It will be ignored:", macro, reference, prethings, area, map);
@@ -1374,6 +1381,11 @@ var MapsHandlr = (function () {
             mid = (group.length / 2) | 0;
             start = this.findPreThingsSpawnStart(direction, group, mid, top, right, bottom, left);
             end = this.findPreThingsSpawnEnd(direction, group, mid, top, right, bottom, left);
+
+            // for debug, don't be lazy
+            start = 0
+            end = group.length - 1;
+
             for (i = start; i <= end; i += 1) {
                 prething = group[i];
                 // For example: if status is true (spawned), don't spawn again

@@ -426,6 +426,7 @@ var MapsCreatr = (function () {
 
     console.log("COnstructor MapsCreatr");
     function MapsCreatr(settings) {
+        console.log("called MapsCreatr");
         if (!settings) {
             throw new Error("No settings given to MapsCreatr.");
         }
@@ -616,6 +617,7 @@ var MapsCreatr = (function () {
      */
     MapsCreatr.prototype.analyzePreSwitch = function (reference, prethings, area, map) {
         // Case: macro (unless it's undefined)
+        console.log("analyzePreSwitch");
         if (reference.macro) {
             return this.analyzePreMacro(reference, prethings, area, map);
         }

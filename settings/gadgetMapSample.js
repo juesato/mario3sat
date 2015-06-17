@@ -39,8 +39,8 @@ var gadgetDescriptions = [
       "7...................",
       "777777777777777777..",
       "7...................",
+      "7...................",
       "7..............77777",
-      "7..............7...7",
       "7..............7...7",
       "7..............7...7",
       "7..............7...7",
@@ -356,8 +356,8 @@ var gadgetDescriptions = [
       "7...................",
       "777777777777777777..",
       "7...................",
+      "7...................",
       "7..............77777",
-      "7..............7...7",
       "7..............7...7",
       "7..............7...7",
       "7..............7...7",
@@ -504,7 +504,8 @@ function getOutputObject(name) {
 }
 
 function macroGadget(reference, prethings, area, map, scope) {
-  console.log("macroGadget");
+  // console.log("macroGadget");
+  // console.log(arguments.callee.caller.name);
   var gadgetName = reference.gadget;
   var idx = gadgetNames.indexOf(gadgetName);
   var tmpGadgetDesc = gadgetDescriptions[idx];
@@ -524,8 +525,15 @@ function macroGadget(reference, prethings, area, map, scope) {
     for (var dx = 0; dx < gadgetDesc[0].length; dx++) {
 
       if (gadgetDesc[i].charAt(dx) == '.') 
+      // if (gadgetDesc[i].charAt(dx) == '.' && !(dy == 10 && dx == 10) && (dy != 0) && (dx != 0) && (dx != 19) && (dy != 19)) 
         continue;
       var code = gadgetDesc[i][dx] - '0';
+      // if (dy == 10 && dx == 10) {
+      //   code = 5;
+      // }
+      // if (dx == 0 || dy == 0 || dx == 19 || dy == 19) {
+      //   code = 6;
+      // }
       var output = getOutputObject(spriteCodeToName[code]);
       output.x = reference.x + BLOCK_SIDE_LEN*dx;
       output.y = reference.y + BLOCK_SIDE_LEN*dy;
@@ -611,7 +619,7 @@ function reflect(grid) {
 var my_map = readGadgetMap(sampleGadgetMap);
 var str = JSON.stringify(my_map, null, 2);
 
-console.log(str);
+// console.log(str);
 
 
 
