@@ -413,9 +413,6 @@ var gadgetIdToName = {
 	80 : "EMPTY" // TODO: this should be FINISH
 }
 
-console.log("Number of descriptions: " + gadgetDescriptions.length);
-console.log("Number of names: " + gadgetNames.length);
-
 var gadgetIdToFlip = {
 	21 : false,
 	22 : true,
@@ -464,41 +461,49 @@ for (var key in gadgetIdToFlip) {
   gadgetNameToId[gadgetIdToFlip[key]] = key;
 }
 
-// Question Block holds Mushroom
-// 
+
 spriteCodeToName = {
   0: "Mario-Unused", 
   1: "Koopa", 
   2: "Koopa shell-Unused", 
   3: "Goomba", 
   4: "Mushroom", 
-  5: "QuestionBlock",
+  5: "QuestionBlock", // Question Block holds Mushroom
   6: "Brick", 
   7: "Stone", 
 };
-// TODO:
-// Make Super Mario and Crouch Mario occur properly
-// TODO: Make Question blocks work
-// TODO: Koopa to Koopa Shell
 
 var GADGET_SIDE_LEN = 20;
 var BLOCK_SIDE_LEN = 8;
 
-function getOutputObject(name) {
-  output = {}
-  if (name == "QuestionBlock") {
-    output.thing = "Block";
-    output.contents = "Mushroom";
-  }
-  else {
-    output.thing = name;
-  }
-  output.width = BLOCK_SIDE_LEN;
-  output.height = BLOCK_SIDE_LEN;
-  return output
-}
 
 function macroGadget(reference, prethings, area, map, scope) {
+
+  function reflect(grid) {
+    var reflected = [];
+    function reverse(s) {
+      return s.split('').reverse().join('');
+    }
+    for (var i = 0; i < GADGET_SIDE_LEN; i++) {
+      reflected.push(reverse(grid[i]));
+    }
+    return reflected;
+  }
+
+  function getOutputObject(name) {
+    output = {}
+    if (name == "QuestionBlock") {
+      output.thing = "Block";
+      output.contents = "Mushroom";
+    }
+    else {
+      output.thing = name;
+    }
+    output.width = BLOCK_SIDE_LEN;
+    output.height = BLOCK_SIDE_LEN;
+    return output
+  }
+
   var gadgetName = reference.gadget;
   var idx = gadgetNames.indexOf(gadgetName);
   var tmpGadgetDesc = gadgetDescriptions[idx];
@@ -587,18 +592,6 @@ function readGadgetMap(gadgetMap) {
     ],
   };
   return new_map;
-}
-
-
-function reflect(grid) {
-  var reflected = [];
-  function reverse(s) {
-    return s.split('').reverse().join('');
-  }
-  for (var i = 0; i < GADGET_SIDE_LEN; i++) {
-    reflected.push(reverse(grid[i]));
-  }
-  return reflected;
 }
 
 
