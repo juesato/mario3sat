@@ -103,7 +103,6 @@ var GameStartr = (function (EightBittr) {
      * @param {Object} [customs]
      */
     function reset(EightBitter, customs) {
-        console.log("reset");
         EightBittr.prototype.reset(EightBitter, EightBitter.resets, customs);
     };
 
@@ -117,7 +116,6 @@ var GameStartr = (function (EightBittr) {
      * operation, in milliseconds.
      */
     function resetTimed(EightBitter, customs) {
-        console.log("resetTimed");
         return EightBittr.prototype.resetTimed(
             EightBitter, EightBitter.resets, customs
         );
@@ -333,7 +331,6 @@ var GameStartr = (function (EightBittr) {
      *                          maps.js (settings/maps.js)
      */
     function resetMapsCreator(EightBitter, customs) {
-        console.log("resetMapsCreator");
         EightBitter.MapsCreator = new MapsCreatr({
             "ObjectMaker": EightBitter.ObjectMaker,
             "groupTypes": EightBitter.settings.maps.groupTypes,
@@ -545,7 +542,6 @@ var GameStartr = (function (EightBittr) {
      * @remarks This is generally called by a QuadsKeepr during a screen update.
      */
     function onAreaUnspawn(EightBitter, direction, top, right, bottom, left) {
-        console.log("onAreaUnspawn");
         EightBitter.MapsHandler.unspawnMap(
             direction,
             (top + EightBitter.MapScreener.top) / EightBitter.unitsize,
@@ -754,7 +750,6 @@ var GameStartr = (function (EightBittr) {
      *                                       WorldSeedr.generateFull call.
      */
     function mapPlaceRandomCommands(EightBitter, generatedCommands) {
-        console.log("mapPlaceRandomCommands");
         var MapsCreator = EightBitter.MapsCreator,
             MapsHandler = EightBitter.MapsHandler,
             prethings = MapsHandler.getPreThings(),

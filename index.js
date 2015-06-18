@@ -1,5 +1,3 @@
-console.log("Index loaded second");
-
 document.onreadystatechange = function (event) {
     if (event.target.readyState !== "complete") {
         return;

@@ -1,6 +1,5 @@
 FullScreenMario.prototype.settings.maps = {
-    // "mapDefault": "1-1",
-    "mapDefault": "3sat",
+    "mapDefault": "1-1",
     "locationDefault": "0",
     "groupTypes": ["Character", "Solid", "Scenery", "Text"],
     "requireEntrance": true,
@@ -3585,56 +3584,6 @@ FullScreenMario.prototype.settings.maps = {
                     ]
                 }
             }
-        }, 
-        {
-            "name" : "jon",
-            "locations" : [
-                { "entry": "Castle"}
-            ],
-            "areas": [
-                {
-                    "setting": "Castle",
-                    "creation": [
-                        { "macro": "StartInsideCastle" },
-                        { "thing": "Stone", "y": 88, "width": 256 },
-                        { "macro": "Floor", "x": 40, "y": 24 },
-                        { "macro": "Water", "x": 48, "width": 40 },
-                        { "macro": "Floor", "x": 88, "width": 64 },
-                        { "macro": "Pipe", "x": 152, "y": 16, "height": "Infinity", "piranha": true, "entrance": 1 },
-                        { "macro": "Section", "x": 168 }
-                    ],
-                    "sections": [
-                        {
-                            "stretch": {
-                                "width": 8,
-                                "creation": [
-                                    { "macro": "Floor" },
-                                    { "thing": "Stone", "y": 88 },
-                                ]
-                            },
-                            "after": {
-                                "width": 424,
-                                "creation": [
-                                    { "macro": "Pipe", "y": 16, "height": "Infinity", "piranha": true, "transport": 1 },
-                                    { "thing": "Stone", "y": 88, "width": 424 },
-                                    { "macro": "Floor", "x": 16, "width": 72 },
-                                    { "macro": "Fill", "thing": "Goomba", "x": 36, "y": 8, "xnum": 3, "xwidth": 12 },
-                                    { "macro": "Floor", "x": 88, "y": 24, "width": 32 },
-                                    { "macro": "Water", "x": 120, "width": 136 },
-                                    { "thing": "Platform", "x": 152, "width": 16, "sliding": true, "begin": 140, "end": 232, "speed": 2 },
-                                    { "macro": "Floor", "x": 256, "y": 24, "width": 48 },
-                                    { "thing": "Stone", "x": 264, "y": 56, "width": 32 },
-                                    { "macro": "Pipe", "x": 304, "y": 40, "height": "Infinity", "piranha": true, "transport": 2 },
-                                    { "macro": "Floor", "x": 320, "y": 24, "width": 56 },
-                                    { "macro": "Pipe", "x": 376, "y": 48, "height": "Infinity", "piranha": true },
-                                    { "macro": "Floor", "x": 392, "y": 24, "width": 32 },
-                                    { "macro": "Section", "x": 424 }
-                                ]
-                            }
-                        },
-                    ]
-                }
-            ]
         }
     ])
 };

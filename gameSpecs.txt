@@ -1,6 +1,0 @@
-Super Mario is 2 units tall, 1 unit wide
-Normal Mario is 1 unit tall, 1 unit wide
-Jump height is 4 tiles (even with running or crouching)
-Koopa continues to bounce until falling off ledge
-
-Mario must be big super mario throughout.

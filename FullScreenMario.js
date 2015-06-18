@@ -1849,18 +1849,6 @@ var FullScreenMario = (function(GameStartr) {
         
         thing.EightBitter.ModAttacher.fireEvent("onPlayerGetsFire");
     }
-
-    /**
-     * Added by Jon
-     * Actually sets the size for a player to very small (8x8) via setSize and 
-     * updateSize.
-     * 
-     * @param {Player} thing
-     */
-    function setPlayerSizeSmall(thing) {
-        thing.EightBitter.setSize(thing, 4, 4, true);
-        thing.EightBitter.updateSize(thing);
-    }
     
     /**
      * Actually sets the size for a player to small (8x8) via setSize and 
@@ -2367,7 +2355,6 @@ var FullScreenMario = (function(GameStartr) {
      * @param {ScrollBlocker} thing
      */
     function spawnScrollBlocker(thing) {
-        console.log("spawnScrollBlocker");
         if (thing.EightBitter.MapScreener.width < thing.right) {
             thing.setEdge = true;
         }
@@ -2603,7 +2590,6 @@ var FullScreenMario = (function(GameStartr) {
      * @param {ScrollBlocker} thing
      */
     function activateScrollBlocker(thing) {
-        console.log("activateScrollBlocker");
         var dx = thing.EightBitter.MapScreener.width - thing.left;
        
         thing.EightBitter.MapScreener.canscroll = false;
@@ -6957,11 +6943,9 @@ var FullScreenMario = (function(GameStartr) {
      * Map entrance Function for entering a castle area. The player is simply
      * added at 2 x 56.
      * 
-     * @param {EightBittr} EightBitter
-     * @param {Location} [location]   The calling Location entering into (by
-     *                                default, not used). -jon     
+     * @param {EightBittr} EightBitter 
      */
-    function mapEntranceCastle(EightBitter, location) {
+    function mapEntranceCastle(EightBitter) {
         EightBitter.addPlayer(
             EightBitter.unitsize * 2,
             EightBitter.unitsize * 56
@@ -8693,26 +8677,6 @@ var FullScreenMario = (function(GameStartr) {
     }
     
 
-    // Jon's macros begin here
-    function macroHop(reference) {
-        var x = reference.x || 0,
-            y = reference.y || 0,
-            width = reference.width,
-            output = [];
-
-        for (var i = 0; i < 10; i++) {
-            output.push({
-                "thing": "Stone",
-                "x": x + i*20,
-                "y": y,
-                "width": 10,
-                "height": 10
-            });            
-        }
-
-        return output;
-    }
-
     EightBittr.prototype.proliferateHard(FullScreenMario.prototype, {
         // Resets
         "resetAudioPlayer": resetAudioPlayer,
@@ -9003,7 +8967,6 @@ var FullScreenMario = (function(GameStartr) {
         "macroSectionFail": macroSectionFail,
         "macroSectionDecider": macroSectionDecider,
         // Jon macros
-        "macroHop": macroHop,
         "macroGadget": macroGadget
     });
     

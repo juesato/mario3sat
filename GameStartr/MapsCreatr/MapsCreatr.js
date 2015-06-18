@@ -424,9 +424,7 @@ var MapsCreatr = (function () {
      * @param {IMapsCreatrSettings} settings
      */
 
-    console.log("COnstructor MapsCreatr");
     function MapsCreatr(settings) {
-        console.log("called MapsCreatr");
         if (!settings) {
             throw new Error("No settings given to MapsCreatr.");
         }
@@ -617,7 +615,6 @@ var MapsCreatr = (function () {
      */
     MapsCreatr.prototype.analyzePreSwitch = function (reference, prethings, area, map) {
         // Case: macro (unless it's undefined)
-        console.log("analyzePreSwitch");
         if (reference.macro) {
             return this.analyzePreMacro(reference, prethings, area, map);
         }
@@ -638,7 +635,6 @@ var MapsCreatr = (function () {
      * @param {Map} map   The Map object containing the Area object.
      */
     MapsCreatr.prototype.analyzePreMacro = function (reference, prethings, area, map) {
-        console.log("analyzePreMacro");
         var macro = this.macros[reference.macro], outputs, i;
         if (!macro) {
             console.warn("A non-existent macro is referenced. It will be ignored:", macro, reference, prethings, area, map);
@@ -721,7 +717,6 @@ var MapsCreatr = (function () {
      * @param {Map} map
      */
     MapsCreatr.prototype.setMapAreas = function (map) {
-        console.log("setMapAreas");
         var areasRaw = map.areas, locationsRaw = map.locations, 
         // The parsed containers should be the same types as the originals
         areasParsed = new areasRaw.constructor(), locationsParsed = new locationsRaw.constructor(), area, location, i;
