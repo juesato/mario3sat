@@ -1317,9 +1317,15 @@ var MapsHandlr = (function () {
      * @param {Number} left    The left-most bound to spawn within.
      */
     MapsHandlr.prototype.spawnMap = function (direction, top, right, bottom, left) {
+        left = -Infinity;
+        bottom = -Infinity;
+        top = Infinity;
+        right = Infinity;
+        // console.log("spawnMap");
         if (this.onSpawn) {
             this.applySpawnAction(this.onSpawn, true, direction, top, right, bottom, left);
         }
+        // console.log("endSpawnMap");
     };
     /**
      * Calls onUnspawn on every PreThing touched by the given bounding box,
@@ -1334,6 +1340,7 @@ var MapsHandlr = (function () {
      * @param {Number} left    The left-most bound to spawn within.
      */
     MapsHandlr.prototype.unspawnMap = function (direction, top, right, bottom, left) {
+        console.log("unspawnMap");
         if (this.onUnspawn) {
             this.applySpawnAction(this.onUnspawn, false, direction, top, right, bottom, left);
         }
@@ -1380,8 +1387,8 @@ var MapsHandlr = (function () {
             end = this.findPreThingsSpawnEnd(direction, group, mid, top, right, bottom, left);
 
             // for debug, don't be lazy
-            start = 0
-            end = group.length - 1;
+            // start = 0
+            // end = group.length - 1;
 
             for (i = start; i <= end; i += 1) {
                 prething = group[i];

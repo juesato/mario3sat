@@ -54,6 +54,22 @@
  * FSM.gameStart();
  */
 
+
+ // window.FSM = new FullScreenMario({
+ //    "width": window.innerWidth, 
+ //    "height": window.innerHeight
+ // });
+ 
+ // document.body.appendChild(FSM.container);
+ 
+ // FSM.proliferate(document.body, {
+ //     "onkeydown": FSM.InputWriter.makePipe("onkeydown", "keyCode", true),
+ //     "onkeyup": FSM.InputWriter.makePipe("onkeyup", "keyCode", true),
+ //     "onmousedown": FSM.InputWriter.makePipe("onmousedown", "which", true)
+ // });
+ 
+ // FSM.gameStart();
+
 var DEBUG = true;
 
 var FullScreenMario = (function(GameStartr) {
@@ -805,6 +821,9 @@ var FullScreenMario = (function(GameStartr) {
     function maintainSolids(EightBitter, solids) {
         var delx = EightBitter.QuadsKeeper.left,
             solid, i;
+
+        // delx = -100000000;
+        console.log(this.GroupHolder.groups);
         
         EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
         
@@ -816,8 +835,10 @@ var FullScreenMario = (function(GameStartr) {
                     solid.movement(solid);
                 }
             } else {
-                EightBitter.arrayDeleteThing(solid, solids, i);
-                i -= 1;
+                solid.placed = false;
+                // EightBitter.arrayDeleteThing(solid, solids, i);
+                // Change this to something like *hide* object, rather than permanently delete.
+                // i -= 1;
             }
         }
     }
@@ -6880,21 +6901,29 @@ var FullScreenMario = (function(GameStartr) {
     function mapEntranceNormal(EightBitter, location) {
 
         console.log("mapEntranceNormal");
-        if (location && location.xloc) {
-            // console.log("scrollWindow x "+ location.xloc + " y " + location.yloc);
 
-            console.log("do it");
-            EightBitter.scrollWindow(
-                location.xloc * EightBitter.unitsize, 
-                -location.yloc * EightBitter.unitsize
-                // 0
-            );
-       }
        
        EightBitter.addPlayer(
             EightBitter.unitsize * 16,
             EightBitter.unitsize * 16
        );
+
+       if (location && location.xloc) {
+            // console.log("scrollWindow x "+ location.xloc + " y " + location.yloc);
+
+            console.log("do it");
+            // EightBitter.scrollWindow(
+            //     location.xloc * EightBitter.unitsize, 
+            //     -location.yloc * EightBitter.unitsize
+            //     // 0
+            // );
+
+            EightBitter.scrollPlayer (
+                location.xloc * EightBitter.unitsize, 
+                -location.yloc * EightBitter.unitsize
+                // 0
+            );
+       }
     }
     
     /**

@@ -1379,7 +1379,9 @@ var GameStartr = (function (EightBittr) {
             }
         }
 
+        // return;
         array.splice(location, 1);
+        console.log("deleted Thing");
 
         if (typeof (thing.onDelete) === "function") {
             thing.onDelete(thing);
