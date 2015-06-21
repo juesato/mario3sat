@@ -512,7 +512,7 @@ var GameStartr = (function (EightBittr) {
                 var y = (solidPrething.top + solidPrething.bottom) / 2;
                 if (y < (-EightBitter.MapScreener.top + 2*quadHeight) / EightBitter.unitsize &&
                     y > (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize) {
-                    console.log(solidPrething);
+                    // console.log(solidPrething);
                     // EightBitter.addPreThing(solidPrething); // Uncommenting this line breaks the map
                 }
             }
