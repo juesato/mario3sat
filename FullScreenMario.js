@@ -824,15 +824,16 @@ var FullScreenMario = (function(GameStartr) {
         var delx = EightBitter.MapScreener.left;
         var solid, i;
 
-        var screenLeft = EightBitter.MapScreener.left;
-        var screenRight = EightBitter.MapScreener.right;
+        var screenWidth = EightBitter.MapScreener.right - EightBitter.MapScreener.left;
+        var screenHeight = EightBitter.MapScreener.bottom - EightBitter.MapScreener.top;
 
         EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
         
         for (i = 0; i < solids.length; ++i) {
             solid = solids[i];
             
-            if (solid.alive && solid.right > -1000 && solid.left < 1000 + (screenRight - screenLeft)) {
+            if (solid.alive && solid.right > -500 && solid.left < 500 + screenWidth 
+                && solid.top > -500 && solid.bottom < 500 + screenHeight) {
                 solid.hidden = false;
                 if (solid.movement) {
                     solid.movement(solid);
@@ -1146,7 +1147,7 @@ var FullScreenMario = (function(GameStartr) {
         // Equivalent for Scrolloffsety
         var scrolloffsety = player.top - EightBitter.MapScreener.middleY;
         if (Math.abs(scrolloffsety) > SCROLL_Y_MARGIN) {
-            scrollspeedy = Math.min(Math.abs(player.scrollspeed), Math.abs(scrolloffsety))
+            scrollspeedy = Math.min(Math.abs(5 * player.scrollspeed), Math.abs(scrolloffsety))
             if (scrolloffsety < 0.0) {
                 scrollspeedy *= -1;
             }
