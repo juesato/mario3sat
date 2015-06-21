@@ -425,7 +425,8 @@ var QuadsKeepr = (function () {
                 this.shiftQuadrant(this.quadrantRows[row].quadrants[col], dx, dy);
             }
         }
-        this.adjustOffsets();
+        var madeShift = this.adjustOffsets();
+        return madeShift;
     };
     /**
      * Adds a QuadrantRow to the end of the quadrantRows Array.
@@ -652,26 +653,34 @@ var QuadsKeepr = (function () {
      * added.
      */
     QuadsKeepr.prototype.adjustOffsets = function () {
+        // var EightBitter =  EightBittr.prototype.ensureCorrectCaller(this);
+        var madeShift = false;
+
         while (-this.offsetX > this.quadrantWidth) {
             this.shiftQuadrantCol(true);
             this.pushQuadrantCol(true);
             this.offsetX += this.quadrantWidth;
+            madeShift = true;
         }
         while (this.offsetX > this.quadrantWidth) {
             this.popQuadrantCol(true);
             this.unshiftQuadrantCol(true);
             this.offsetX -= this.quadrantWidth;
+            madeShift = true;
         }
         while (-this.offsetY > this.quadrantHeight) {
             this.unshiftQuadrantRow(true);
             this.pushQuadrantRow(true);
             this.offsetY += this.quadrantHeight;
+            madeShift = true;
         }
         while (this.offsetY > this.quadrantHeight) {
             this.popQuadrantRow(true);
             this.unshiftQuadrantRow(true);
             this.offsetY -= this.quadrantHeight;
+            madeShift = true;
         }
+        return madeShift;
     };
     /**
      * Shifts a Quadrant horizontally and vertically.

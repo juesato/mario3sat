@@ -824,27 +824,27 @@ var FullScreenMario = (function(GameStartr) {
         var delx = EightBitter.MapScreener.left;
         var solid, i;
 
-        var screenWidth = EightBitter.MapScreener.right - EightBitter.MapScreener.left;
-        var screenHeight = EightBitter.MapScreener.bottom - EightBitter.MapScreener.top;
+        // var screenWidth = EightBitter.MapScreener.right - EightBitter.MapScreener.left;
+        // var screenHeight = EightBitter.MapScreener.bottom - EightBitter.MapScreener.top;
 
-        EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
+        // EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
         
-        for (i = 0; i < solids.length; ++i) {
-            solid = solids[i];
+        // for (i = 0; i < solids.length; ++i) {
+        //     solid = solids[i];
             
-            if (solid.alive && solid.right > -500 && solid.left < 500 + screenWidth 
-                && solid.top > -500 && solid.bottom < 500 + screenHeight) {
-                solid.hidden = false;
-                if (solid.movement) {
-                    solid.movement(solid);
-                }
-            } else {
-                solid.hidden = true;
+        //     if (solid.alive && solid.right > -500 && solid.left < 500 + screenWidth 
+        //         && solid.top > -500 && solid.bottom < 500 + screenHeight) {
+        //         solid.hidden = false;
+        //         if (solid.movement) {
+        //             solid.movement(solid);
+        //         }
+        //     } else {
+        //         solid.hidden = true;
 
-                // EightBitter.arrayDeleteThing(solid, solids, i);
-                // i -= 1;
-            }
-        }
+        //         // EightBitter.arrayDeleteThing(solid, solids, i);
+        //         // i -= 1;
+        //     }
+        // }
     }
 
     /**

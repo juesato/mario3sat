@@ -474,7 +474,6 @@ var GameStartr = (function (EightBittr) {
      * @param {Number} [dy]   How far to scroll vertically.
      */
     function scrollWindow(dx, dy) {
-        // console.log("scrollWindow dx: " + dx + "dy: " + dy);
         var EightBitter =  EightBittr.prototype.ensureCorrectCaller(this);
 
         dx = dx | 0;
@@ -487,8 +486,61 @@ var GameStartr = (function (EightBittr) {
         EightBitter.MapScreener.shift(dx, dy);
         EightBitter.shiftAll(-dx, -dy);
 
-        EightBitter.QuadsKeeper.shiftQuadrants(-dx, -dy);
+        var madeShift = EightBitter.QuadsKeeper.shiftQuadrants(-dx, -dy);
+        if (madeShift) { // Every time the quadrants shift, we tell QuadsKeeper to track the new solids in those quadrants.
+            // This has taken over the old FullScreenMario.maintainSolids() functionality 
+            console.log("movedQuadrants");
+
+            var solids = EightBitter.GroupHolder.getSolidGroup();
+            var solidPrething, solid, i;
+            var screenWidth = EightBitter.MapScreener.right - EightBitter.MapScreener.left;
+            var screenHeight = EightBitter.MapScreener.bottom - EightBitter.MapScreener.top;
+            var quadWidth = EightBitter.QuadsKeeper.quadrantWidth;
+            var quadHeight = EightBitter.QuadsKeeper.quadrantHeight;
+
+            // Add back in new Solids to appear on screen
+
+            // TODO: Avoid duplicates
+            // TODO: Check for new column, as opposed to whole region
+            var solidPrethings = EightBitter.MapsHandler.prethings.Solid.xInc;
+            var start = findStartByX(solidPrethings, (EightBitter.MapScreener.left - 2*quadWidth) / EightBitter.unitsize);
+            var end = findEndByX(solidPrethings, (EightBitter.MapScreener.right + 2*quadWidth) / EightBitter.unitsize);
+
+            console.log("Before " + solids.length);
+            for (i = start; i <= end; i++) {
+                solidPrething = solidPrethings[i];
+                var y = (solidPrething.top + solidPrething.bottom) / 2;
+                if (y < (-EightBitter.MapScreener.top + 2*quadHeight) / EightBitter.unitsize &&
+                    y > (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize) {
+                    console.log(solidPrething);
+                    // EightBitter.addPreThing(solidPrething); // Uncommenting this line breaks the map
+                }
+            }
+            console.log("After " + solids.length);
+
+            EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
+            
+            for (i = 0; i < solids.length; ++i) {
+                solid = solids[i];
+                
+                if (solid.alive && solid.right > -500 && solid.left < 500 + screenWidth 
+                    && solid.top > -500 && solid.bottom < 500 + screenHeight) {
+                    solid.hidden = false;
+                    if (solid.movement) {
+                        solid.movement(solid);
+                    }
+                } else {
+                    // solid.hidden = true;
+
+                    EightBitter.arrayDeleteThing(solid, solids, i);
+                    i -= 1;
+                }
+            }
+        }
     }
+
+
+
 
     /**
      * Scrolls everything but a single Thing.
