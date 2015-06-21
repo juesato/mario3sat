@@ -833,15 +833,14 @@ var FullScreenMario = (function(GameStartr) {
             solid = solids[i];
             
             if (solid.alive && solid.right > -1000 && solid.left < 1000 + (screenRight - screenLeft)) {
+                solid.hidden = false;
                 if (solid.movement) {
                     solid.movement(solid);
                 }
             } else {
-                // solid.placed = false;
                 solid.hidden = true;
 
                 // EightBitter.arrayDeleteThing(solid, solids, i);
-                // Change this to something like *hide* object, rather than permanently delete.
                 // i -= 1;
             }
         }
