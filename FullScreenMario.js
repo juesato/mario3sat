@@ -374,6 +374,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {PreThing} prething
      */
     function addPreThing(prething) {
+        // just find the relevant preThing and call addPreThing on it
         console.log("addPreThing spawns");
         var thing = prething.thing,
             position = prething.position || thing.position;
@@ -819,23 +820,26 @@ var FullScreenMario = (function(GameStartr) {
      * @param {Solid[]} solids   EightBittr's GroupHolder's Solid group.
      */
     function maintainSolids(EightBitter, solids) {
-        var delx = EightBitter.QuadsKeeper.left,
-            solid, i;
+        // var delx = EightBitter.QuadsKeeper.left;
+        var delx = EightBitter.MapScreener.left;
+        var solid, i;
 
-        // delx = -100000000;
-        console.log(this.GroupHolder.groups);
-        
+        var screenLeft = EightBitter.MapScreener.left;
+        var screenRight = EightBitter.MapScreener.right;
+
         EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
         
         for (i = 0; i < solids.length; ++i) {
             solid = solids[i];
             
-            if (solid.alive && solid.right > delx) {
+            if (solid.alive && solid.right > -1000 && solid.left < 1000 + (screenRight - screenLeft)) {
                 if (solid.movement) {
                     solid.movement(solid);
                 }
             } else {
-                solid.placed = false;
+                // solid.placed = false;
+                solid.hidden = true;
+
                 // EightBitter.arrayDeleteThing(solid, solids, i);
                 // Change this to something like *hide* object, rather than permanently delete.
                 // i -= 1;

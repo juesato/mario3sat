@@ -1386,7 +1386,7 @@ var MapsHandlr = (function () {
             start = this.findPreThingsSpawnStart(direction, group, mid, top, right, bottom, left);
             end = this.findPreThingsSpawnEnd(direction, group, mid, top, right, bottom, left);
 
-            // for debug, don't be lazy
+            // for debug, just load everything
             // start = 0
             // end = group.length - 1;
 
@@ -1418,6 +1418,7 @@ var MapsHandlr = (function () {
     MapsHandlr.prototype.findPreThingsSpawnStart = function (direction, group, mid, top, right, bottom, left) {
         var directionKey = MapsHandlr.directionKeys[direction], directionEnd = this.getDirectionEnd(directionKey, top, right, bottom, left), i;
         for (i = 0; i < group.length; i += 1) {
+            // console.log(group[i][directionKey] + " " + directionEnd);
             if (group[i][directionKey] >= directionEnd) {
                 return i;
             }
