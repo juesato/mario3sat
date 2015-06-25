@@ -714,6 +714,99 @@ var MapsCreatr = (function () {
         }
         return prething;
     };
+
+
+
+
+
+
+
+
+
+// Do the same thing, but don't add to array of PreThings
+
+    MapsCreatr.prototype.analyzePreSwitchv2 = function (reference, prethings, area, map) {
+        // Case: macro (unless it's undefined)
+        if (reference.macro) {
+            return this.analyzePreMacrov2(reference, prethings, area, map);
+        }
+        else {
+            // Case: default (a regular PreThing)
+            return this.analyzePreThingv2(reference, prethings, area, map);
+        }
+    };
+    MapsCreatr.prototype.analyzePreMacrov2 = function (reference, prethings, area, map) {
+        var macro = this.macros[reference.macro], outputs, i;
+        if (!macro) {
+            console.warn("A non-existent macro is referenced. It will be ignored:", macro, reference, prethings, area, map);
+            return;
+        }
+        // Avoid modifying the original macro by creating a new object in its
+        // place, while submissively proliferating any default macro settings
+        outputs = macro(reference, prethings, area, map, this.scope);
+        // If there is any output, recurse on all components of it, Array or not
+        if (outputs) {
+            if (outputs instanceof Array) {
+                for (i = 0; i < outputs.length; i += 1) {
+                    this.analyzePreSwitchv2(outputs[i], prethings, area, map);
+                }
+            }
+            else {
+                this.analyzePreSwitchv2(outputs, prethings, area, map);
+            }
+        }
+        return outputs;
+    };
+    MapsCreatr.prototype.analyzePreThingv2 = function (reference, prethings, area, map) {
+        var title = reference.thing, thing, prething;
+        if (!this.ObjectMaker.hasFunction(title)) {
+            console.warn("A non-existent Thing type is referenced. It will be ignored:", title, reference, prethings, area, map);
+            return;
+        }
+        prething = new PreThing(this.ObjectMaker.make(title, reference), reference, this.ObjectMaker);
+        thing = prething.thing;
+        if (!prething.thing[this.keyGroupType]) {
+            console.warn("A Thing does not contain a " + this.keyGroupType + ". It will be ignored:", prething, "\n", arguments);
+            return;
+        }
+        if (this.groupTypes.indexOf(prething.thing[this.keyGroupType]) === -1) {
+            console.warn("A Thing contains an unknown " + this.keyGroupType + ". It will be ignored:", thing[this.keyGroupType], prething, reference, prethings, area, map);
+            return;
+        }
+        // prethings[prething.thing[this.keyGroupType]].push(prething); // DON'T ADD IN V2
+        if (!thing.noBoundaryStretch && area.boundaries) {
+            this.stretchAreaBoundaries(prething, area);
+        }
+        // If a Thing is an entrance, then the location it is an entrance to 
+        // must know it and its position. Note that this will have to be changed
+        // for Pokemon/Zelda style games.
+        if (thing[this.keyEntrance] !== undefined && typeof thing[this.keyEntrance] !== "object") {
+            if (typeof map.locations[thing[this.keyEntrance]] !== "undefined") {
+                if (typeof map.locations[thing[this.keyEntrance]].xloc === "undefined") {
+                    map.locations[thing[this.keyEntrance]].xloc = prething.left;
+                }
+                if (typeof map.locations[thing[this.keyEntrance]].yloc === "undefined") {
+                    map.locations[thing[this.keyEntrance]].yloc = prething.top;
+                }
+                map.locations[thing[this.keyEntrance]].entrance = prething.thing;
+            }
+        }
+        if (reference.collectionName && area.collections) {
+            this.ensureThingCollection(prething, reference.collectionName, reference.collectionKey, area);
+        }
+        return prething;
+    };
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Converts the raw area settings in a Map into Area objects.
      *

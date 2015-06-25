@@ -389,7 +389,9 @@ FullScreenMario.prototype.settings.maps = {
         },
 
 {"name": "3sat-small",
-"locations": [{"xloc": 100 + 1282 ,"yloc": 100 + 3840}],
+// "locations": [{"xloc": 100 + 1282 ,"yloc": 100 + 3840}],
+"locations": [{"xloc": 100 ,"yloc": 100}],
+
 "areas": [{"setting": "Castle","creation": [
 {"macro": "Gadget","gadget": "START","reflect": false,"x": 0,"y": 0},
 {"macro": "Gadget","gadget": "ELBOW_T_INV","reflect": true,"x": 162,"y": 0},
@@ -428,7 +430,12 @@ FullScreenMario.prototype.settings.maps = {
 
 
 
-{"name": "3sat","locations": [{"xloc": 30 + 1120,"yloc": 10 + 2720}],"areas": [{"setting": "Castle","creation": [{"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 0,"y": 3840},
+{"name": "3sat",
+// "locations": [{"xloc": 30 + 1120,"yloc": 10 + 2720}],
+"locations": [{"xloc": 30,"yloc": 10}],
+
+
+"areas": [{"setting": "Castle","creation": [{"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 0,"y": 3840},
 {"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 160,"y": 3840},
 {"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 320,"y": 3840},
 {"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 480,"y": 3840},
@@ -1120,9 +1127,9 @@ FullScreenMario.prototype.settings.maps = {
 // {"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 4160,"y": 160},
 // {"macro": "Gadget","gadget": "PATH_DROP","reflect": false,"x": 4320,"y": 160},
 // {"macro": "Gadget","gadget": "PATH_DROP","reflect": false,"x": 4480,"y": 160},
-// {"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 0,"y": 0},
-// {"macro": "Gadget","gadget": "ELBOW_UL","reflect": true,"x": 160,"y": 0},
-// {"macro": "Gadget","gadget": "ELBOW_UL","reflect": false,"x": 320,"y": 0},
+{"macro": "Gadget","gadget": "PATH_RL","reflect": false,"x": 0,"y": 0},
+{"macro": "Gadget","gadget": "PATH_RL","reflect": true,"x": 160,"y": 0},
+{"macro": "Gadget","gadget": "PATH_RL","reflect": false,"x": 320,"y": 0},
 // {"macro": "Gadget","gadget": "PATH_RL","reflect": false,"x": 480,"y": 0},
 // {"macro": "Gadget","gadget": "PATH_RL","reflect": false,"x": 640,"y": 0},
 // {"macro": "Gadget","gadget": "PATH_RL","reflect": false,"x": 800,"y": 0},
