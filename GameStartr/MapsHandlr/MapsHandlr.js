@@ -1410,21 +1410,18 @@ var MapsHandlr = (function () {
      * @param {Number} left    The left-most bound to spawn within.
      */
     MapsHandlr.prototype.spawnMap = function (direction, top, right, bottom, left) {
-        // left = -Infinity;
-        // bottom = -Infinity;
-        // top = Infinity;
-        // right = Infinity;
 
+        var topFlip = top;
+        var bottomFlip = bottom;
 
         left = left || -Infinity;
-        bottom = bottom || -Infinity;
-        top = top || Infinity;
+        bottomFlip = bottomFlip || -Infinity;
+        topFlip = topFlip || Infinity;
         right = right || Infinity;
 
         // var bottomFlip = top;
         // var topFlip = bottom;
-        var topFlip = top;
-        var bottomFlip = bottom;
+
 
         // console.log("spawnMap");
         if (this.onSpawn) {
@@ -1493,6 +1490,11 @@ var MapsHandlr = (function () {
 
             for (i = start; i <= end; i += 1) {
                 prething = group[i];
+
+                // Make sure that y values work too
+                if (prething.top > top || prething.bottom < bottom) {
+                    continue;
+                }
                 // For example: if status is true (spawned), don't spawn again
                 if (prething.spawned !== status) {
                     prething.spawned = status;
