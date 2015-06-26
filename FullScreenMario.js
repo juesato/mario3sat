@@ -6427,6 +6427,7 @@ var FullScreenMario = (function(GameStartr) {
      * @todo   Rename .killonend to be more accurate
      */
     function killNPCs() {
+        console.log("killNPCs might delete things");
         var EightBitter = EightBittr.prototype.ensureCorrectCaller(this),
             group, thing, i;
         

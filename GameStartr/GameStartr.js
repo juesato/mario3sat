@@ -517,29 +517,42 @@ var GameStartr = (function (EightBittr) {
             var start = findStartByX(solidPrethings, (EightBitter.MapScreener.left - 2*quadWidth) / EightBitter.unitsize);
             var end = findEndByX(solidPrethings, (EightBitter.MapScreener.right + 2*quadWidth) / EightBitter.unitsize);
 
-            console.log(solidPrethings.length); // this is the number of prethings
-            console.log(start + " start end " + end);
+            // console.log(solidPrethings.length); // this is the number of prethings
             // console.log("Before " + solids.length);
             var myCmd, myPrething;
 
+            // console.log(" Min y is " + (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize
+            //     + "Max y is " + (-EightBitter.MapScreener.top + 2*quadHeight) / EightBitter.unitsize 
+            //     );
+
             for (i = start; i <= end; i++) {
+
+
                 solidPrething = solidPrethings[i];
+
+                // if (i == start) {
+                //     console.log("START PRETHING X " + solidPrething.left);
+                // }
+                // if (i == end) {
+                //     console.log("END PRETHING X " + solidPrething.left);
+                // }
+
                 var y = (solidPrething.top + solidPrething.bottom) / 2;
                 if (y < (-EightBitter.MapScreener.top + 2*quadHeight) / EightBitter.unitsize &&
                     y > (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize) {
                     
                     if (solidPrething.deleted) {
-                        // console.log(solidPrething);
-                        console.log("addSpawn"); // now this code is never being called
-                        myCmd = {
-                            "thing": solidPrething.title,
-                            "x": solidPrething.left,
-                            "y": solidPrething.top
-                        };
-                        myPrething = MapsCreator.analyzePreSwitchv2(myCmd, prethings, area, map);
-                        myPrething.spawned = true;
-                        myPrething.position = "end";
-                        EightBitter.addPreThing(myPrething);
+                        // myCmd = {
+                        //     "thing": solidPrething.title,
+                        //     "x": solidPrething.left,
+                        //     "y": solidPrething.top
+                        // };
+                        // myPrething = MapsCreator.analyzePreSwitchv2(myCmd, prethings, area, map);
+                        // myPrething.spawned = true;
+                        // myPrething.position = "end";
+
+                        solidPrething.spawned = true;
+                        EightBitter.addPreThing(solidPrething);
                         solidPrething.deleted = false;
                     }
                     else {
@@ -547,38 +560,26 @@ var GameStartr = (function (EightBittr) {
                     }
                 }
             }
-            // console.log("After " + solids.length);
 
 
-            console.log("dumbAdd");
-            var myRef = {
-                "thing" : "Block",
-                "x" : 20 + 8*ct,
-                // "y" : 60 + (MapScreener.top) / EightBitter.unitsize
-                "y": 70
-            }; 
+            // var myRef = {
+            //     "thing" : "Block",
+            //     "x" : 0 + 8*ct,
+            //     "y": 56
+            // }; 
 
-            // holy shit these aren't absolute coordinates wtf.
-            // i *think* they're screen coordinates
-            // what the fuck this has to be the stupidest thing ever. y is relative and x is not?
-            var myPrething = MapsCreator.analyzePreSwitch(myRef, prethings, area, map);
+            // var myPrething = MapsCreator.analyzePreSwitch(myRef, prethings, area, map);
 
-            // console.log(myPrething);            
-            myPrething.spawned = true;
-            var myThing = EightBitter.addPreThing(myPrething);
-            ct++;
+            // myPrething.spawned = true;
+            // var myThing = EightBitter.addPreThing(myPrething);
+            // ct++;
+
+            // console.log("HELLO");
             // console.log(myThing);
-            if (first) {
-                hello = myThing;
-                first = false;
-            }
-            console.log("HELLO");
-            console.log(myThing);
-
 
             EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
             
-            console.log("Num solids before delete: " + solids.length);
+            // console.log("Num solids before delete: " + solids.length);
             for (i = 0; i < solids.length; ++i) {
                 solid = solids[i];
                 
@@ -586,18 +587,18 @@ var GameStartr = (function (EightBittr) {
                     && solid.top > -500 && solid.bottom < 500 + screenHeight) {
                     solid.hidden = false;
                     if (solid.movement) {
-                        console.log("probsnomovement");
                         solid.movement(solid);
                     }
                 } else {
                     // solid.hidden = true;
+
                     solid['correspondingPreThing'].deleted = true;
 
                     EightBitter.arrayDeleteThing(solid, solids, i);
                     i -= 1;
                 }
             }
-            console.log(solids.length);
+            // console.log(solids.length);
         }
     }
 
