@@ -7,9 +7,9 @@ FullScreenMario.prototype.settings.runner = {
             this.QuadsKeeper.determineAllQuadrants("Text", this.GroupHolder.getTextGroup());
             // Should delete out-of-bounds stuff here
         },
-        function () {
-            this.maintainSolids(this, this.GroupHolder.getSolidGroup());
-        },
+        // function () {
+        //     this.maintainSolids(this, this.GroupHolder.getSolidGroup());
+        // },
         function () {
             this.maintainCharacters(this, this.GroupHolder.getCharacterGroup());
         },
