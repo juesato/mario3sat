@@ -1410,15 +1410,26 @@ var MapsHandlr = (function () {
      * @param {Number} left    The left-most bound to spawn within.
      */
     MapsHandlr.prototype.spawnMap = function (direction, top, right, bottom, left) {
-        left = -Infinity;
-        bottom = -Infinity;
-        top = Infinity;
-        right = Infinity;
+        // left = -Infinity;
+        // bottom = -Infinity;
+        // top = Infinity;
+        // right = Infinity;
+
+
+        left = left || -Infinity;
+        bottom = bottom || -Infinity;
+        top = top || Infinity;
+        right = right || Infinity;
+
+        // var bottomFlip = top;
+        // var topFlip = bottom;
+        var topFlip = top;
+        var bottomFlip = bottom;
+
         // console.log("spawnMap");
         if (this.onSpawn) {
-            this.applySpawnAction(this.onSpawn, true, direction, top, right, bottom, left);
+            this.applySpawnAction(this.onSpawn, true, direction, topFlip, right, bottomFlip, left);
         }
-        // console.log("endSpawnMap");
     };
     /**
      * Calls onUnspawn on every PreThing touched by the given bounding box,
@@ -1463,6 +1474,7 @@ var MapsHandlr = (function () {
      *       instead of plain Arrays.
      */
     MapsHandlr.prototype.applySpawnAction = function (callback, status, direction, top, right, bottom, left) {
+        // console.log("applySpawnAction");
         var name, group, prething, mid, start, end, i;
         for (name in this.prethings) {
             if (!this.prethings.hasOwnProperty(name)) {
@@ -1479,15 +1491,12 @@ var MapsHandlr = (function () {
             start = this.findPreThingsSpawnStart(direction, group, mid, top, right, bottom, left);
             end = this.findPreThingsSpawnEnd(direction, group, mid, top, right, bottom, left);
 
-            // for debug, just load everything
-            // start = 0
-            // end = group.length - 1;
-
             for (i = start; i <= end; i += 1) {
                 prething = group[i];
                 // For example: if status is true (spawned), don't spawn again
                 if (prething.spawned !== status) {
                     prething.spawned = status;
+                    prething.deleted = !prething.spawned;
                     callback(prething);
                 }
             }

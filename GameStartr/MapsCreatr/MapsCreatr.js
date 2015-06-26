@@ -597,6 +597,12 @@ var MapsCreatr = (function () {
         for (i = 0; i < creation.length; i += 1) {
             this.analyzePreSwitch(creation[i], prethings, area, map);
         }
+        for (i = 0; i < prethings.length; i++) {
+            var prething = prethings[i];
+            // prething.deleted = true;
+            var thing = group[i].thing;
+            thing['correspondingPreThing'] = prething; // circular reference but its okay  
+        }
         return this.processPreThingsArrays(prethings);
     };
     /**

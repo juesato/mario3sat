@@ -374,7 +374,7 @@ var FullScreenMario = (function(GameStartr) {
      * @param {PreThing} prething
      */
     function addPreThing(prething) {
-        // console.log("addPreThing spawns");
+        console.log("addPreThing");
         var thing = prething.thing,
             position = prething.position || thing.position;
         
@@ -6835,23 +6835,30 @@ var FullScreenMario = (function(GameStartr) {
 
         EightBitter.ModAttacher.fireEvent("onSetMap", map);
         
+        // Spawn location sprites
+        // EightBitter.MapsHandler.setLocation(location || 0);
+        // EightBitter.MapScreener.setVariables();
+
+        EightBitter.presetLocation(
+            location
+            || map.locationDefault
+            || EightBitter.settings.maps.locationDefault
+        );
+
+        var startLoc = EightBitter.MapsHandler.getLocation(location || 0);
+
+        EightBitter.MapsHandler.spawnMap("xInc", startLoc.yloc + 300, startLoc.xloc + 300,
+            startLoc.yloc - 300, startLoc.xloc - 300);
+
         EightBitter.setLocation(
             location
             || map.locationDefault
             || EightBitter.settings.maps.locationDefault
         );
     }
-    
-    /**
-     * Sets the game state to a location within the current map, resetting all
-     * Things, inputs, the current Area, PixelRender, and MapScreener in the
-     * process. The location's entry Function is called to bring a new Player
-     * into the game. The mod events are fired.
-     * 
-     * @param {Mixed} [location]   The name of the location within the map (by
-     *                             default 0 for the first in Array form).
-     */
-    function setLocation(name) {
+
+
+    function presetLocation(name) {
         var EightBitter = EightBittr.prototype.ensureCorrectCaller(this),
             location;
         
@@ -6866,7 +6873,35 @@ var FullScreenMario = (function(GameStartr) {
         EightBitter.MapScreener.setVariables();
         location = EightBitter.MapsHandler.getLocation(name || 0);
         
-        EightBitter.ModAttacher.fireEvent("onPreSetLocation", location)
+        EightBitter.ModAttacher.fireEvent("onPreSetLocation", location);
+    }
+    /**
+     * Sets the game state to a location within the current map, resetting all
+     * Things, inputs, the current Area, PixelRender, and MapScreener in the
+     * process. The location's entry Function is called to bring a new Player
+     * into the game. The mod events are fired.
+     * 
+     * @param {Mixed} [location]   The name of the location within the map (by
+     *                             default 0 for the first in Array form).
+     */
+    function setLocation(name) {
+        var EightBitter = EightBittr.prototype.ensureCorrectCaller(this),
+            location;
+        
+        // EightBitter.MapScreener.nokeys = false;
+        // EightBitter.MapScreener.notime = false;
+        // EightBitter.MapScreener.canscroll = true;
+        // EightBitter.MapScreener.clearScreen();
+        // EightBitter.GroupHolder.clearArrays();
+        // EightBitter.TimeHandler.cancelAllEvents();
+        
+        // EightBitter.MapsHandler.setLocation(name || 0);
+        // EightBitter.MapScreener.setVariables();
+        // location = EightBitter.MapsHandler.getLocation(name || 0);
+        
+        // EightBitter.ModAttacher.fireEvent("onPreSetLocation", location)
+
+        location = EightBitter.MapsHandler.getLocation(name || 0);
         
         EightBitter.PixelDrawer.setBackground(
             EightBitter.MapsHandler.getArea().background
@@ -8957,6 +8992,7 @@ var FullScreenMario = (function(GameStartr) {
         // Map sets
         "setMap": setMap,
         "setLocation": setLocation,
+        "presetLocation": presetLocation,
         // Map entrances
         "mapEntranceNormal": mapEntranceNormal,
         "mapEntrancePlain": mapEntrancePlain,
