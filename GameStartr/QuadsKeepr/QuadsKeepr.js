@@ -389,10 +389,8 @@ var QuadsKeepr = (function () {
             top += this.quadrantHeight;
         }
         if (this.onAdd) { 
-        // TODO: only need to spawn areas close to Mario. 
-        // Right now, since this is called in the beginning, it only spawns areas close to origin
-         
-            // this.onAdd("xInc", this.top, this.right, this.bottom, this.left);
+        // This is commented out because spawning is moved into setMap instead of resetQuadrants
+        // this.onAdd("xInc", this.top, this.right, this.bottom, this.left);
         }
     };
     /**

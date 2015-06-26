@@ -526,8 +526,6 @@ var GameStartr = (function (EightBittr) {
             //     );
 
             for (i = start; i <= end; i++) {
-
-
                 solidPrething = solidPrethings[i];
 
                 // if (i == start) {
@@ -542,15 +540,6 @@ var GameStartr = (function (EightBittr) {
                     y > (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize) {
                     
                     if (solidPrething.deleted) {
-                        // myCmd = {
-                        //     "thing": solidPrething.title,
-                        //     "x": solidPrething.left,
-                        //     "y": solidPrething.top
-                        // };
-                        // myPrething = MapsCreator.analyzePreSwitchv2(myCmd, prethings, area, map);
-                        // myPrething.spawned = true;
-                        // myPrething.position = "end";
-
                         solidPrething.spawned = true;
                         EightBitter.addPreThing(solidPrething);
                         solidPrething.deleted = false;
@@ -561,25 +550,8 @@ var GameStartr = (function (EightBittr) {
                 }
             }
 
-
-            // var myRef = {
-            //     "thing" : "Block",
-            //     "x" : 0 + 8*ct,
-            //     "y": 56
-            // }; 
-
-            // var myPrething = MapsCreator.analyzePreSwitch(myRef, prethings, area, map);
-
-            // myPrething.spawned = true;
-            // var myThing = EightBitter.addPreThing(myPrething);
-            // ct++;
-
-            // console.log("HELLO");
-            // console.log(myThing);
-
             EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
             
-            // console.log("Num solids before delete: " + solids.length);
             for (i = 0; i < solids.length; ++i) {
                 solid = solids[i];
                 
@@ -590,20 +562,14 @@ var GameStartr = (function (EightBittr) {
                         solid.movement(solid);
                     }
                 } else {
-                    // solid.hidden = true;
-
                     solid['correspondingPreThing'].deleted = true;
 
                     EightBitter.arrayDeleteThing(solid, solids, i);
                     i -= 1;
                 }
             }
-            // console.log(solids.length);
         }
     }
-
-
-
 
     /**
      * Scrolls everything but a single Thing.
