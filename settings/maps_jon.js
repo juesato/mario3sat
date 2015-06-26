@@ -432,7 +432,7 @@ FullScreenMario.prototype.settings.maps = {
 
 {"name": "3sat",
 // "locations": [{"xloc": 30 + 1120,"yloc": 10 + 2720}],
-"locations": [{"xloc": 30,"yloc": 10}],
+"locations": [{"xloc": 30,"yloc": 70}],
 
 
 "areas": [{"setting": "Castle","creation": [{"macro": "Gadget","gadget": "EMPTY","reflect": false,"x": 0,"y": 3840},

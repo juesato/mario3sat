@@ -474,6 +474,8 @@ var GameStartr = (function (EightBittr) {
      * @param {Number} [dy]   How far to scroll vertically.
      */
      var ct = 0;
+     var first = true;
+     var hello;
     function scrollWindow(dx, dy) {
         var EightBitter =  EightBittr.prototype.ensureCorrectCaller(this);
 
@@ -490,10 +492,12 @@ var GameStartr = (function (EightBittr) {
         var madeShift = EightBitter.QuadsKeeper.shiftQuadrants(-dx, -dy);
         if (madeShift) { // Every time the quadrants shift, we tell QuadsKeeper to track the new solids in those quadrants.
             // This has taken over the old FullScreenMario.maintainSolids() functionality 
-            console.log("movedQuadrants");
+            // console.log("movedQuadrants");
+
             var MapScreener = EightBitter.MapScreener,
                 MapsCreator = EightBitter.MapsCreator,
                 MapsHandler = EightBitter.MapsHandler,
+                QuadsKeeper = EightBitter.QuadsKeeper,
                 area = MapsHandler.getArea(),
                 map = MapsHandler.getMap(),
                 prethings = MapsHandler.getPreThings();
@@ -513,7 +517,7 @@ var GameStartr = (function (EightBittr) {
             var start = findStartByX(solidPrethings, (EightBitter.MapScreener.left - 2*quadWidth) / EightBitter.unitsize);
             var end = findEndByX(solidPrethings, (EightBitter.MapScreener.right + 2*quadWidth) / EightBitter.unitsize);
 
-            console.log(solidPrethings.length);
+            console.log(solidPrethings.length); // this is the number of prethings
             console.log(start + " start end " + end);
             // console.log("Before " + solids.length);
             var myCmd, myPrething;
@@ -524,42 +528,57 @@ var GameStartr = (function (EightBittr) {
                 if (y < (-EightBitter.MapScreener.top + 2*quadHeight) / EightBitter.unitsize &&
                     y > (-EightBitter.MapScreener.bottom - 2*quadHeight) / EightBitter.unitsize) {
                     
-                    if (i < start + 10) console.log(solidPrething);
-                    myCmd = {
-                        "thing": solidPrething.title,
-                        "x": solidPrething.left,
-                        "y": solidPrething.top + MapScreener.top / EightBitter.unitsize
-                    };
-                    myPrething = MapsCreator.analyzePreSwitchv2(myCmd, prethings, area, map);
-                    myPrething.spawned = true;
-                    EightBitter.addPreThing(myPrething);
-
-                    // EightBitter.addPreThing(solidPrething); // Uncommenting this line breaks the map
+                    if (solidPrething.deleted) {
+                        // console.log(solidPrething);
+                        console.log("addSpawn"); // now this code is never being called
+                        myCmd = {
+                            "thing": solidPrething.title,
+                            "x": solidPrething.left,
+                            "y": solidPrething.top
+                        };
+                        myPrething = MapsCreator.analyzePreSwitchv2(myCmd, prethings, area, map);
+                        myPrething.spawned = true;
+                        myPrething.position = "end";
+                        EightBitter.addPreThing(myPrething);
+                        solidPrething.deleted = false;
+                    }
+                    else {
+                        // console.log("alreadySpawned");
+                    }
                 }
             }
             // console.log("After " + solids.length);
 
 
-            // console.log("dumbAdd");
-            // var myRef = {
-            //     "thing" : "Block",
-            //     "x" : 20 + 8*ct,
-            //     "y" : 60 + MapScreener.top / EightBitter.unitsize
-            // }; 
-            // // holy shit these aren't absolute coordinates wtf.
-            // // i *think* they're screen coordinates
-            // // what the fuck this has to be the stupidest thing ever. y is relative and x is not?
-            // var myPrething = MapsCreator.analyzePreSwitch(myRef, prethings, area, map);
+            console.log("dumbAdd");
+            var myRef = {
+                "thing" : "Block",
+                "x" : 20 + 8*ct,
+                // "y" : 60 + (MapScreener.top) / EightBitter.unitsize
+                "y": 70
+            }; 
+
+            // holy shit these aren't absolute coordinates wtf.
+            // i *think* they're screen coordinates
+            // what the fuck this has to be the stupidest thing ever. y is relative and x is not?
+            var myPrething = MapsCreator.analyzePreSwitch(myRef, prethings, area, map);
 
             // console.log(myPrething);            
-            // myPrething.spawned = true;
-            // EightBitter.addPreThing(myPrething);
-            // ct++;
-
+            myPrething.spawned = true;
+            var myThing = EightBitter.addPreThing(myPrething);
+            ct++;
+            // console.log(myThing);
+            if (first) {
+                hello = myThing;
+                first = false;
+            }
+            console.log("HELLO");
+            console.log(myThing);
 
 
             EightBitter.QuadsKeeper.determineAllQuadrants("Solid", solids);
             
+            console.log("Num solids before delete: " + solids.length);
             for (i = 0; i < solids.length; ++i) {
                 solid = solids[i];
                 
@@ -567,15 +586,18 @@ var GameStartr = (function (EightBittr) {
                     && solid.top > -500 && solid.bottom < 500 + screenHeight) {
                     solid.hidden = false;
                     if (solid.movement) {
+                        console.log("probsnomovement");
                         solid.movement(solid);
                     }
                 } else {
                     // solid.hidden = true;
+                    solid['correspondingPreThing'].deleted = true;
 
                     EightBitter.arrayDeleteThing(solid, solids, i);
                     i -= 1;
                 }
             }
+            console.log(solids.length);
         }
     }
 
@@ -685,7 +707,6 @@ var GameStartr = (function (EightBittr) {
         }
 
         thing.EightBitter.ModAttacher.fireEvent("onAddThing", thing, left, top);
-        console.log(thing);
         return thing;
     }
 

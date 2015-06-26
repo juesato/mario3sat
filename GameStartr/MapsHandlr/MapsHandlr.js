@@ -1433,7 +1433,7 @@ var MapsHandlr = (function () {
      * @param {Number} left    The left-most bound to spawn within.
      */
     MapsHandlr.prototype.unspawnMap = function (direction, top, right, bottom, left) {
-        console.log("unspawnMap");
+        // console.log("unspawnMap");
         if (this.onUnspawn) {
             this.applySpawnAction(this.onUnspawn, false, direction, top, right, bottom, left);
         }

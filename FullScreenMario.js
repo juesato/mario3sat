@@ -374,16 +374,19 @@ var FullScreenMario = (function(GameStartr) {
      * @param {PreThing} prething
      */
     function addPreThing(prething) {
-        // just find the relevant preThing and call addPreThing on it
-        console.log("addPreThing spawns");
+        // console.log("addPreThing spawns");
         var thing = prething.thing,
             position = prething.position || thing.position;
         
-        thing.EightBitter.addThing(
+        thing['correspondingPreThing'] = prething; // circular reference but its okay       
+
+        var myThing = thing.EightBitter.addThing(
             thing, 
             prething.left * thing.EightBitter.unitsize - thing.EightBitter.MapScreener.left,
-            (thing.EightBitter.MapScreener.floor - prething.top) * thing.EightBitter.unitsize
+            // (thing.EightBitter.MapScreener.floor - prething.top) * thing.EightBitter.unitsize
+            -thing.EightBitter.MapScreener.top - prething.top * thing.EightBitter.unitsize
         );
+        // IMPORTANT NOTE: this was originally (MapScreener.floor - prething.top) * unitsize
         
         // Either the prething or thing, in that order, may request to be in the
         // front or back of the container
@@ -401,6 +404,8 @@ var FullScreenMario = (function(GameStartr) {
         }
         
         thing.EightBitter.ModAttacher.fireEvent("onAddPreThing", prething);
+
+        return myThing;
     }
     
     /**
