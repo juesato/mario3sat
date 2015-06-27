@@ -6847,8 +6847,20 @@ var FullScreenMario = (function(GameStartr) {
 
         var startLoc = EightBitter.MapsHandler.getLocation(location || 0);
 
-        EightBitter.MapsHandler.spawnMap("xInc", startLoc.yloc + 300, startLoc.xloc + 300,
-            startLoc.yloc - 300, startLoc.xloc - 300);
+
+        var MapsHandler = EightBitter.MapsHandler,
+            prethings = MapsHandler.getPreThings(),
+            solidPrethings = prethings.Solid;
+        // ugly but functional
+        for (var i = 0; i < solidPrethings.xInc.length; i++) {
+            solidPrethings.xInc[i].deleted = true;
+            solidPrethings.xDec[i].deleted = true;
+            solidPrethings.yInc[i].deleted = true;
+            solidPrethings.yDec[i].deleted = true;
+        }
+
+        EightBitter.MapsHandler.spawnMap("xInc", startLoc.yloc + 400, startLoc.xloc + 300,
+            startLoc.yloc - 400, startLoc.xloc - 300);
 
         EightBitter.setLocation(
             location
