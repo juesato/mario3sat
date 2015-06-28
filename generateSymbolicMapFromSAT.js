@@ -393,8 +393,9 @@ var clauses = parsed.clauses;
 // console.log(numVars);
 // console.log(clauses);
 
-var abstractMapGrid = new AbstractMapGrid(clauses, numVars);
-var mySymbolicGrid = abstractMapGrid.getSymbolicGrid();
+// var abstractMapGrid = new AbstractMapGrid(clauses, numVars);
+// var mySymbolicGrid = abstractMapGrid.getSymbolicGrid();
+
 // console.log(mySymbolicGrid);
 
 // for (var i = 0; i < mySymbolicGrid.length; i++) {
