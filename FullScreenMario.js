@@ -304,6 +304,25 @@ var FullScreenMario = (function(GameStartr) {
         
         EightBitter.ModAttacher.fireEvent("onGameStart");
     }
+
+// Loads a map from SAT string rather than from file
+    function gameStartFromSat(satStr) {
+        var EightBitter = EightBittr.prototype.ensureCorrectCaller(this);
+        
+        if (DEBUG) EightBitter.AudioPlayer.setMutedOn();
+
+        EightBitter.setMap(
+            EightBitter.settings.maps.mapDefault,
+            // "my_map",
+            EightBitter.settings.maps.locationDefault
+        );
+        EightBitter.StatsHolder.set(
+            "lives", EightBitter.settings.statistics.values.lives.valueDefault
+        );
+        
+        EightBitter.ModAttacher.fireEvent("onGameStart");
+    }
+
     
     /**
      * Completely ends the game. All Thing groups are clared, sounds are 

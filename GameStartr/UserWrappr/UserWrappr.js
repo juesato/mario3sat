@@ -55,6 +55,12 @@ function UserWrappr(settings) {
      */
     self.reset = function (settings) {
         var customs = settings.customs || {};
+        console.log(settings);
+        if (settings.satStr) {
+            EightBittr.prototype.proliferate(customs, 
+                {"satStr": settings.satStr});
+        }
+
         GameStartrConstructor = (
             settings.GameStartrConstructor || GameStartrConstructor
         );
@@ -296,6 +302,8 @@ function UserWrappr(settings) {
      * 
      */
     var loadGameStarter = function (customs) {
+        console.log("loadGameStarter");
+        console.log(customs);
         var section = document.getElementById("game");
         
         GameStarter = new GameStartrConstructor(customs);

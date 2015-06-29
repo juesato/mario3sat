@@ -41,8 +41,8 @@
             Enter a boolean expression in <a href="https://en.wikipedia.org/wiki/Conjunctive_normal_form">CNF</a>, using parentheses to mark or-clauses, along with the &, |, and ! characters as desired.
 
             <form>
-                <input type="text" name="sat_string" style='font-size: 20px; margin-bottom: 10px; margin-top: 25px;' size="40"> <br>
-                <input type="submit" style="font-size: 18px; font-family: 'Times New Roman';" value="Load Level">
+                <input type="text" name="sat_string" value="(A|B|!C)&(!A|!B|!C)" style='font-family: "Times New Roman"; font-size: 20px; margin-bottom: 10px; margin-top: 25px;' size="40"> <br>
+                <input type="button" onclick="userEntersNewMap(this.form.sat_string.value)" style="font-size: 18px; font-family: 'Times New Roman';" value="Load Level">
             </form>
         </section>
 
