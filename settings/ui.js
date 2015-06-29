@@ -295,80 +295,83 @@ FullScreenMario.prototype.settings.ui = {
                     };
                 });
             })(["left", "right", "up", "down", "sprint", "pause"])
-        }, {
-            "title": "Mods!",
-            "generator": "OptionsButtons",
-            "keyActive": "enabled",
-            "assumeInactive": true,
-            "options": function (GameStarter) {
-                return GameStarter.ModAttacher.getMods();
-            },
-            "callback": function (GameStarter, schema, button) {
-                GameStarter.ModAttacher.toggleMod(button.getAttribute("value") || button.textContent);
-            }
-        }, {
-            "title": "Editor",
-            "generator": "LevelEditor"
-        }, {
-            "title": "Maps",
-            "generator": "MapsGrid",
-            "rangeX": [1, 4],
-            "rangeY": [1, 8],
-            "extras": {
-                "Map Generator!": (function () {
-                    var shuffle = function (string) {
-                        return string
-                            .split('')
-                            // Same function used in browserchoice.eu :)
-                            .sort(function () {
-                                return 0.5 - Math.random()
-                            })
-                            .reverse()
-                            .join('');
-                    };
+        }, 
+        // {
+        //     "title": "Mods!",
+        //     "generator": "OptionsButtons",
+        //     "keyActive": "enabled",
+        //     "assumeInactive": true,
+        //     "options": function (GameStarter) {
+        //         return GameStarter.ModAttacher.getMods();
+        //     },
+        //     "callback": function (GameStarter, schema, button) {
+        //         GameStarter.ModAttacher.toggleMod(button.getAttribute("value") || button.textContent);
+        //     }
+        // }, 
+        // {
+        //     "title": "Editor",
+        //     "generator": "LevelEditor"
+        // }, 
+        // {
+        //     "title": "Maps",
+        //     "generator": "MapsGrid",
+        //     "rangeX": [1, 4],
+        //     "rangeY": [1, 8],
+        //     "extras": {
+        //         "Map Generator!": (function () {
+        //             var shuffle = function (string) {
+        //                 return string
+        //                     .split('')
+        //                     // Same function used in browserchoice.eu :)
+        //                     .sort(function () {
+        //                         return 0.5 - Math.random()
+        //                     })
+        //                     .reverse()
+        //                     .join('');
+        //             };
                     
-                    var getNewSeed = function () {
-                        return shuffle(String(new Date().getTime()));
-                    };
+        //             var getNewSeed = function () {
+        //                 return shuffle(String(new Date().getTime()));
+        //             };
                     
-                    return {
-                        "title": "Map Generator!",
-                        "callback": function (GameStarter, schema, button, event) {
-                            var parent = event.target.parentNode,
-                                randomizer = parent.querySelector(".randomInput");
+        //             return {
+        //                 "title": "Map Generator!",
+        //                 "callback": function (GameStarter, schema, button, event) {
+        //                     var parent = event.target.parentNode,
+        //                         randomizer = parent.querySelector(".randomInput");
                                 
-                            randomizer.value = randomizer.value.replace(/[^\d]/g, '');
-                            if (!randomizer.value) {
-                                randomizer.value = getNewSeed();
-                            }
+        //                     randomizer.value = randomizer.value.replace(/[^\d]/g, '');
+        //                     if (!randomizer.value) {
+        //                         randomizer.value = getNewSeed();
+        //                     }
                             
-                            GameStarter.LevelEditor.disable();
-                            GameStarter.NumberMaker.resetFromSeed(randomizer.value);
-                            GameStarter.setMap("Random");
+        //                     GameStarter.LevelEditor.disable();
+        //                     GameStarter.NumberMaker.resetFromSeed(randomizer.value);
+        //                     GameStarter.setMap("Random");
                             
-                            if (!randomizer.getAttribute("custom")) {
-                                randomizer.value = getNewSeed();
-                            }
-                        },
-                        "extraElements": [
-                            [
-                                "input", {
-                                    "className": "randomInput maps-grid-input",
-                                    "type": "text",
-                                    "value": getNewSeed(),
-                                    "onchange": function (event) {
-                                        event.target.setAttribute("custom", true)
-                                    }
-                                }
-                            ]
-                        ]
-                    };
-                })()
-            },
-            "callback": function (GameStarter, schema, button, event) {
-                GameStarter.LevelEditor.disable();
-                GameStarter.setMap(button.getAttribute("value") || button.textContent);
-            }
-        }
+        //                     if (!randomizer.getAttribute("custom")) {
+        //                         randomizer.value = getNewSeed();
+        //                     }
+        //                 },
+        //                 "extraElements": [
+        //                     [
+        //                         "input", {
+        //                             "className": "randomInput maps-grid-input",
+        //                             "type": "text",
+        //                             "value": getNewSeed(),
+        //                             "onchange": function (event) {
+        //                                 event.target.setAttribute("custom", true)
+        //                             }
+        //                         }
+        //                     ]
+        //                 ]
+        //             };
+        //         })()
+        //     },
+        //     "callback": function (GameStarter, schema, button, event) {
+        //         GameStarter.LevelEditor.disable();
+        //         GameStarter.setMap(button.getAttribute("value") || button.textContent);
+        //     }
+        // }
     ]
 };

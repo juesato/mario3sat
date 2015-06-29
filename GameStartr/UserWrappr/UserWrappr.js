@@ -76,7 +76,7 @@ function UserWrappr(settings) {
         generators = {
             "generatorOptionsButtons": generatorOptionsButtons,
             "generatorOptionsTable": generatorOptionsTable,
-            "generatorLevelEditor": generatorLevelEditor,
+            // "generatorLevelEditor": generatorLevelEditor,
             "generatorMapsGrid": generatorMapsGrid
         };
         
@@ -661,6 +661,8 @@ function UserWrappr(settings) {
     /**
      * 
      */
+
+    /*
     var generatorLevelEditor = (function () {
         function createUploaderDiv() {
             var uploader = document.createElement("div"),
@@ -769,7 +771,9 @@ function UserWrappr(settings) {
             return output;
         }
     })();
-    
+    */    
+
+
     /**
      * 
      */
